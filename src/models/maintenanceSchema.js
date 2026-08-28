@@ -77,7 +77,7 @@ export const createFornecedorSchema = Type.Object({
 export const updateFornecedorSchema = Type.Partial(createFornecedorSchema);
 
 export const createManutencaoSchema = Type.Object({
-  data: Type.String({ format: 'date' }), // Ex: '2026-05-13'
+  data: Type.String({ format: 'date' }), // Ex: 2026-08-28
   nota_fiscal: Type.String({ minLength: 1, maxLength: 100 }),
   solicitacao: Type.Integer({ minimum: 0 }),
   finalizado: Type.Optional(Type.Boolean({ default: false })),
@@ -85,6 +85,17 @@ export const createManutencaoSchema = Type.Object({
   tipo_manutencao: Type.Optional(Type.String({ maxLength: 100 })),
   observacoes: Type.Optional(Type.String()),
   fornecedor_id: Type.Integer({ minimum: 1 }),
+
+  itens: Type.Optional(
+    Type.Array(
+      Type.Object({
+        descricao: Type.String({ minLength: 2 }),
+        quantidade: Type.Number({ minimum: 0.01 }),
+        valor_unitario: Type.Number({ minimum: 0 }),
+        equipamento_id: Type.Integer({ minimum: 1 }),
+      }),
+    ),
+  ),
 });
 
 export const updateManutencaoSchema = Type.Partial(createManutencaoSchema);
@@ -94,7 +105,7 @@ export const createItemManutencaoSchema = Type.Object({
   quantidade: Type.Number({ minimum: 0.01 }),
   valor_unitario: Type.Number({ minimum: 0 }),
   equipamento_id: Type.Integer({ minimum: 1 }),
-  manutencao_id: Type.Integer({ minimum: 1 }),
+  manutencao_id: Type.Optional(Type.Integer({ minimum: 1 })),
 });
 
 export const updateItemManutencaoSchema = Type.Partial(
