@@ -66,3 +66,120 @@ model User {
   @@index([id, username, email])
   @@map("users")
 }
+
+// ==========================================
+// SISTEMA DE MANUTENÇÃO & PATRIMÔNIO
+// ==========================================
+
+model Predio {
+  id          Int     @id @default(autoincrement())
+  nome_predio String  @db.VarChar(150)
+  descricao   String? @db.VarChar(255)
+  locais      Local[]
+
+  @@map("predios")
+}
+
+model Local {
+  id           Int           @id @default(autoincrement())
+  nome_local   String        @db.VarChar(255)
+  predio_id    Int
+  predio       Predio        @relation(fields: [predio_id], references: [id], onDelete: Cascade)
+  equipamentos Equipamento[]
+
+  @@map("locais")
+}
+
+model Grupo {
+  id         Int         @id @default(autoincrement())
+  nome_grupo String      @db.VarChar(100)
+  categorias Categoria[]
+
+  @@map("grupos")
+}
+
+model Categoria {
+  id             Int           @id @default(autoincrement())
+  nome_categoria String        @db.VarChar(100)
+  grupo_id       Int?
+  grupo          Grupo?        @relation(fields: [grupo_id], references: [id], onDelete: SetNull)
+  equipamentos   Equipamento[]
+
+  @@map("categorias")
+}
+
+model Marca {
+  id           Int           @id @default(autoincrement())
+  marca        String        @db.VarChar(100)
+  equipamentos Equipamento[]
+
+  @@map("marcas")
+}
+
+model Equipamento {
+  id             Int     @id @default(autoincrement())
+  patrimonio     String  @unique @db.VarChar(50)
+  capacidade     Decimal @db.Decimal(10, 2)
+  unidade_medida String  @db.VarChar(50)
+  valor_bem      Decimal @db.Decimal(10, 2)
+  situacao       String  @db.VarChar(50)
+  tipo           String? @db.VarChar(100)
+  modelo         String? @db.VarChar(100)
+
+  categoria_id Int
+  categoria    Categoria @relation(fields: [categoria_id], references: [id], onDelete: Restrict)
+
+  marca_id Int
+  marca    Marca @relation(fields: [marca_id], references: [id], onDelete: Restrict)
+
+  local_id Int
+  local    Local @relation(fields: [local_id], references: [id], onDelete: Restrict)
+
+  itens ItemManutencao[]
+
+  @@map("equipamentos")
+}
+
+model Fornecedor {
+  id           Int          @id @default(autoincrement())
+  razao_social String       @db.VarChar(150)
+  cnpj         String       @unique @db.VarChar(30)
+  telefone     String?      @db.VarChar(50)
+  email        String?      @db.VarChar(100)
+  manutencoes  Manutencao[]
+
+  @@map("fornecedores")
+}
+
+model Manutencao {
+  id              Int      @id @default(autoincrement())
+  data            DateTime @db.Date
+  nota_fiscal     String   @db.VarChar(100)
+  solicitacao     Int
+  finalizado      Boolean  @default(false)
+  forma_aquisicao String?  @db.VarChar(100)
+  tipo_manutencao String?  @db.VarChar(100)
+  observacoes     String?  @db.Text
+
+  fornecedor_id Int
+  fornecedor    Fornecedor @relation(fields: [fornecedor_id], references: [id], onDelete: Cascade)
+
+  itens ItemManutencao[]
+
+  @@map("manutencoes")
+}
+
+model ItemManutencao {
+  id             Int     @id @default(autoincrement())
+  descricao      String  @db.Text
+  quantidade     Decimal @db.Decimal(10, 2)
+  valor_unitario Decimal @db.Decimal(10, 2)
+
+  equipamento_id Int
+  equipamento    Equipamento @relation(fields: [equipamento_id], references: [id], onDelete: Cascade)
+
+  manutencao_id Int
+  manutencao    Manutencao @relation(fields: [manutencao_id], references: [id], onDelete: Cascade)
+
+  @@map("itens_manutencao")
+}

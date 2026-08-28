@@ -1,12 +1,13 @@
-import express from 'express';
-import meRoutes from './meRoutes.js';
 import authRoutes from './authRoutes.js';
+import auxiliaresRoutes from './auxiliaresRoutes.js';
+import equipamentoRoutes from './equipamentoRoutes.js';
+import meRoutes from './meRoutes.js';
 import userRoutes from './userRoutes.js';
 
-const router = express.Router();
-
-router.use('/me', meRoutes);
-router.use('/auth', authRoutes);
-router.use('/users', userRoutes);
-
-export default router;
+export default async function apiRoutes(fastify, options) {
+  fastify.register(authRoutes, { prefix: '/auth' });
+  fastify.register(meRoutes, { prefix: '/me' });
+  fastify.register(userRoutes, { prefix: '/users' });
+  fastify.register(auxiliaresRoutes, { prefix: '/auxiliares' });
+  fastify.register(equipamentoRoutes, { prefix: '/equipamentos' });
+}

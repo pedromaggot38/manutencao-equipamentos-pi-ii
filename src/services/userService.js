@@ -10,9 +10,14 @@ import { sendEmail } from '../utils/emailService.js';
 import { emailTemplates } from '../templates/emailTemplates.js';
 import logger from '../utils/logger.js';
 import { invalidateAllUserSessions } from './authService.js';
+import { paginate } from '../utils/paginate.js';
 
-export const hasAnyUser = async () => {
-  const count = await db.user.count();
+export const hasAnyRoot = async () => {
+  const count = await db.user.count({
+    where: {
+      role: 'root',
+    },
+  });
   return count > 0;
 };
 
@@ -43,7 +48,7 @@ export const findUserByAnyIdentifierWithoutError = async (identifier) => {
  * @param {Object} userData - Dados do usuário (username, email, password, etc)
  */
 export const createFirstRootUser = async (userData) => {
-  const systemHasOwner = await hasAnyUser();
+  const systemHasOwner = await hasAnyRoot();
 
   if (systemHasOwner) {
     throw new AppError(
@@ -86,16 +91,27 @@ export const createUserByAdmin = async (
   });
 };
 
-export const findAllUsers = async (options = {}) => {
+export const listAllUsers = async (options = {}) => {
   const {
-    page = 1,
-    limit = 10,
     search,
     role,
     status,
     sortBy = 'createdAt',
-    sortOrder = 'desc',
+    ...paginationOptions
   } = options;
+
+  const where = {};
+
+  if (role) where.role = role;
+  if (status) where.status = status;
+
+  if (search) {
+    where.OR = [
+      { name: { contains: search, mode: 'insensitive' } },
+      { username: { contains: search, mode: 'insensitive' } },
+      { email: { contains: search, mode: 'insensitive' } },
+    ];
+  }
 
   const allowedSortFields = [
     'createdAt',
@@ -105,52 +121,18 @@ export const findAllUsers = async (options = {}) => {
     'status',
     'role',
   ];
-  const validatedSortBy = allowedSortFields.includes(sortBy)
-    ? sortBy
-    : 'createdAt';
-  const validatedSortOrder = ['asc', 'desc'].includes(sortOrder.toLowerCase())
-    ? sortOrder.toLowerCase()
-    : 'desc';
 
-  const validatedLimit = Math.max(1, Number(limit));
-  const validatedPage = Math.max(1, Number(page));
-  const skip = (validatedPage - 1) * validatedLimit;
-
-  const where = {};
-
-  if (role) {
-    where.role = role;
-  }
-  if (status) {
-    where.status = status;
-  }
-
-  if (search) {
-    where.OR = [
-      { name: { contains: search, mode: 'insensitive' } },
-      { username: { contains: search } },
-      { email: { contains: search } },
-    ];
-  }
-
-  const [users, total] = await Promise.all([
-    db.user.findMany({
-      where,
-      skip,
-      take: validatedLimit,
-      orderBy: { [validatedSortBy]: validatedSortOrder },
-    }),
-    db.user.count({ where }),
-  ]);
+  const result = await paginate(db.user, {
+    ...paginationOptions,
+    where,
+    sortBy,
+    allowedSortFields,
+    defaultSortBy: 'createdAt',
+  });
 
   return {
-    users,
-    pagination: {
-      total,
-      page: validatedPage,
-      limit: validatedLimit,
-      totalPages: Math.ceil(total / validatedLimit),
-    },
+    users: result.data,
+    pagination: result.pagination,
   };
 };
 

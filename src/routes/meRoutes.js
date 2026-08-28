@@ -1,7 +1,5 @@
-import express from 'express';
 import { protect } from '../middlewares/auth.js';
 import * as userController from '../controllers/userController.js';
-import validate from '../middlewares/validate.js';
 import {
   deactivateMeSchema,
   requestEmailChangeSchema,
@@ -9,37 +7,62 @@ import {
   updateMyPasswordSchema,
   verifyOtpSchema,
 } from '../models/userSchema.js';
-import { uploadAvatar } from '../config/multer.js';
+import { uploadAvatar } from '../middlewares/uploadAvatar.js';
 
-const router = express.Router();
+export default async function meRoutes(fastify, options) {
+  fastify.addHook('preHandler', protect);
 
-router.use(protect);
+  fastify.get('/', userController.getMe);
 
-router
-  .route('/')
-  .get(userController.getMe)
-  .patch(uploadAvatar, validate(updateMeSchema), userController.updateMe);
+  fastify.patch(
+    '/',
+    {
+      preHandler: [uploadAvatar],
+      schema: { body: updateMeSchema },
+    },
+    userController.updateMe,
+  );
 
-router.patch(
-  '/password',
-  validate(updateMyPasswordSchema),
-  userController.updateMyPassword,
-);
+  fastify.patch(
+    '/password',
+    {
+      schema: { body: updateMyPasswordSchema },
+    },
+    userController.updateMyPassword,
+  );
 
-router
-  .route('/activation')
-  .post(userController.requestActivationToken)
-  .patch(validate(verifyOtpSchema), userController.verifyAccount);
+  fastify.post('/activation', userController.requestActivationToken);
 
-router
-  .route('/email')
-  .post(validate(requestEmailChangeSchema), userController.updateEmailRequest)
-  .patch(validate(verifyOtpSchema), userController.verifyEmailUpdate);
+  fastify.patch(
+    '/activation',
+    {
+      schema: { body: verifyOtpSchema },
+    },
+    userController.verifyAccount,
+  );
 
-router.patch(
-  '/deactivate',
-  validate(deactivateMeSchema),
-  userController.deactivateMe,
-);
+  fastify.post(
+    '/email',
+    {
+      schema: { body: requestEmailChangeSchema },
+    },
+    userController.updateEmailRequest,
+  );
 
-export default router;
+  fastify.patch(
+    '/email',
+    {
+      schema: { body: verifyOtpSchema },
+    },
+    userController.verifyEmailUpdate,
+  );
+
+  // Desativação
+  fastify.patch(
+    '/deactivate',
+    {
+      schema: { body: deactivateMeSchema },
+    },
+    userController.deactivateMe,
+  );
+}
