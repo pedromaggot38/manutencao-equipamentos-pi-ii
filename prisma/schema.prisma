@@ -1,0 +1,68 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [citext]
+}
+
+enum UserStatus {
+  pending
+  active
+  banned
+  deactivated
+}
+
+enum Role {
+  user
+  admin
+  root
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  device    String?
+  ip        String?
+  revoked   Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+model User {
+  id                 String    @id @default(uuid())
+  name               String
+  username           String    @unique @db.Citext
+  email              String    @unique @db.Citext
+  newEmail           String?
+  changeEmailToken   String?
+  changeEmailExpires DateTime?
+  isVerified         Boolean   @default(false)
+  verifyToken        String?
+  verifyExpires      DateTime?
+  password           String
+  resetToken         String?
+  resetExpires       DateTime?
+
+  avatar String?
+  phone  String?
+  role   Role       @default(user)
+  status UserStatus @default(pending)
+
+  passwordChangedAt DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  refreshTokens RefreshToken[]
+
+  @@index([id, username, email])
+  @@map("users")
+}
