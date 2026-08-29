@@ -5,6 +5,8 @@ import { resfc } from '../utils/resfc.js';
 import {
   clearRefreshTokenCookie,
   setRefreshTokenCookie,
+  setAccessTokenCookie,
+  clearAccessTokenCookie,
 } from '../utils/controllers/cookieUtils.js';
 import AppError from '../utils/appError.js';
 
@@ -56,6 +58,7 @@ export const setupFirstRoot = async (request, reply) => {
     await authService.generateNewSessionDirectly(rootUser.id, clientInfo);
 
   setRefreshTokenCookie(reply, request, refreshToken);
+  setAccessTokenCookie(reply, request, accessToken);
 
   return resfc({
     reply,
@@ -92,6 +95,7 @@ export const signup = async (request, reply) => {
   );
 
   setRefreshTokenCookie(reply, request, refreshToken);
+  setAccessTokenCookie(reply, request, accessToken);
 
   return resfc({
     reply,
@@ -116,6 +120,7 @@ export const signin = async (request, reply) => {
   );
 
   setRefreshTokenCookie(reply, request, refreshToken);
+  setAccessTokenCookie(reply, request, accessToken);
 
   return resfc({
     reply,
@@ -129,7 +134,9 @@ export const signout = async (request, reply) => {
     request.cookies.refreshToken || request.body.refreshToken;
 
   await authService.revokeSession(incomingRefreshToken);
+
   clearRefreshTokenCookie(reply);
+  clearAccessTokenCookie(reply);
 
   return resfc({
     reply,
@@ -144,6 +151,8 @@ export const refresh = async (request, reply) => {
 
   const { accessToken, user } =
     await authService.refreshSession(incomingRefreshToken);
+
+  setAccessTokenCookie(reply, request, accessToken);
 
   return resfc({
     reply,
@@ -197,6 +206,7 @@ export const resetPassword = async (request, reply) => {
     await authService.generateNewSessionDirectly(user.id, clientInfo);
 
   setRefreshTokenCookie(reply, request, refreshToken);
+  setAccessTokenCookie(reply, request, accessToken);
 
   return resfc({
     reply,

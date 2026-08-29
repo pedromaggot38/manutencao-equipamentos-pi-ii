@@ -1,4 +1,5 @@
 import { protect } from '../middlewares/auth.js';
+import { Value } from '@sinclair/typebox/value';
 import * as userController from '../controllers/userController.js';
 import {
   deactivateMeSchema,
@@ -19,6 +20,30 @@ export default async function meRoutes(fastify, options) {
     {
       preHandler: [uploadAvatar],
       schema: { body: updateMeSchema },
+      validatorCompiler: ({ schema }) => {
+        return (data) => {
+          if (!data || typeof data !== 'object') {
+            return true;
+          }
+
+          const isValid = Value.Check(schema, data);
+          if (!isValid) {
+            const errors = [...Value.Errors(schema, data)];
+            return {
+              error: new Error(
+                errors
+                  .map(
+                    (e) =>
+                      `${e.path.replace('/', '') || 'campo'}: ${e.message}`,
+                  )
+                  .join(', '),
+              ),
+            };
+          }
+
+          return true;
+        };
+      },
     },
     userController.updateMe,
   );

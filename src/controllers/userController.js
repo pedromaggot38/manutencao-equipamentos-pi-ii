@@ -132,12 +132,15 @@ export const getMe = async (request, reply) => {
 
 export const updateMe = async (request, reply) => {
   const currentUser = request.user;
+  const body = request.body || {};
 
-  if (Object.keys(request.body).length === 0 && !request.file) {
+  const hasUploadedFile = Boolean(request.file && request.file.filename);
+
+  if (Object.keys(body).length === 0 && !hasUploadedFile) {
     throw new AppError('Envie ao menos um campo para atualização.', 400);
   }
 
-  const updateData = { ...request.body };
+  const updateData = { ...body };
 
   if (updateData.name) updateData.name = sanitizeString(updateData.name);
   if (updateData.username)
@@ -146,7 +149,8 @@ export const updateMe = async (request, reply) => {
 
   let newFileUrl = null;
 
-  if (request.file) {
+  // Só gera URL local se houver um arquivo real processado
+  if (hasUploadedFile) {
     newFileUrl = getFileUrl(request.file, 'avatars');
     updateData.avatar = newFileUrl;
   }
@@ -175,7 +179,8 @@ export const updateMe = async (request, reply) => {
     if (
       avatarWasChanged &&
       currentUser.avatar &&
-      currentUser.avatar.startsWith('/public/')
+      currentUser.avatar.startsWith('/public/') &&
+      currentUser.avatar !== newFileUrl
     ) {
       deleteFile(currentUser.avatar);
     }

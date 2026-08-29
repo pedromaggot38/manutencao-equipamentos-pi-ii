@@ -5,16 +5,14 @@ import AppError from '../utils/appError.js';
 export const protect = async (request, reply) => {
   let token;
 
-  // 1. Extrai o token do Header
   if (
     request.headers.authorization &&
     request.headers.authorization.startsWith('Bearer')
   ) {
     token = request.headers.authorization.split(' ')[1];
+  } else if (request.cookies && request.cookies.accessToken) {
+    token = request.cookies.accessToken;
   }
-
-  // Se usar cookies futuramente, pode adicionar:
-  // else if (request.cookies && request.cookies.accessToken) { token = request.cookies.accessToken; }
 
   if (!token) {
     throw new AppError(
@@ -23,7 +21,6 @@ export const protect = async (request, reply) => {
     );
   }
 
-  // 2. Valida o Token
   let decoded;
   try {
     decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
@@ -45,7 +42,6 @@ export const protect = async (request, reply) => {
     throw new AppError('O usuário dono deste token não existe mais.', 401);
   }
 
-  // 4. Verifica status da conta
   const allowedStatuses = ['active', 'pending'];
   if (!allowedStatuses.includes(currentUser.status)) {
     throw new AppError(
