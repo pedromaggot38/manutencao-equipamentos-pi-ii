@@ -16,7 +16,7 @@ export const uploadAvatar = async (request, reply) => {
   for await (const part of parts) {
     if (part.type === 'file') {
       if (!part.filename || part.filename.trim() === '') {
-        await part.toBuffer(); // Descarta o stream vazio
+        await part.toBuffer();
         continue;
       }
 
