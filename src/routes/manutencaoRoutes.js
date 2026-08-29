@@ -39,7 +39,7 @@ export default async function manutencaoRoutes(fastify, options) {
     manutencaoController.deleteManutencao,
   );
 
-  // --- Rotas de Itens (Detail) Busca paginada dos itens de uma manutenção específica ---
+  // --- Rotas de Itens (Detail) ---
 
   fastify.get(
     '/:id/itens',
@@ -54,8 +54,11 @@ export default async function manutencaoRoutes(fastify, options) {
   );
 
   fastify.delete(
-    '/itens/:itemId',
-    { preHandler: [restrictTo('admin', 'root')] },
+    '/itens/:id',
+    {
+      schema: { params: idParamSchema },
+      preHandler: [restrictTo('admin', 'root')],
+    },
     manutencaoController.removeItem,
   );
 }

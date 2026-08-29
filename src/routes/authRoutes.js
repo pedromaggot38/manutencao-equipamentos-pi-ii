@@ -3,6 +3,7 @@ import {
   loginSchema,
   registerSchema,
   resetPasswordSchema,
+  setupSchema,
 } from '../models/userSchema.js';
 import * as authController from '../controllers/authController.js';
 
@@ -20,7 +21,7 @@ export default async function authRoutes(fastify, options) {
     '/setup',
     {
       config: authLimitConfig,
-      schema: { body: registerSchema },
+      schema: { body: setupSchema },
     },
     authController.setupFirstRoot,
   );

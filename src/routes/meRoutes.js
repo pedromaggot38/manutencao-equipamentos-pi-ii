@@ -57,7 +57,6 @@ export default async function meRoutes(fastify, options) {
     userController.verifyEmailUpdate,
   );
 
-  // Desativação
   fastify.patch(
     '/deactivate',
     {

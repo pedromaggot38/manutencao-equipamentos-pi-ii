@@ -36,11 +36,23 @@ export const findUserByAnyIdentifier = async (identifier) => {
   return await findUserOrThrow(identifier);
 };
 
-export const findUserByAnyIdentifierWithoutError = async (identifier) => {
-  const where = parseUserIdentifier(identifier);
-  const user = await db.user.findUnique({ where });
+export const findUserByAnyIdentifierWithoutError = async (
+  identifier,
+  secondaryIdentifier = null,
+) => {
+  if (!secondaryIdentifier) {
+    const where = parseUserIdentifier(identifier);
+    return await db.user.findFirst({ where });
+  }
 
-  return user;
+  return await db.user.findFirst({
+    where: {
+      OR: [
+        parseUserIdentifier(identifier),
+        parseUserIdentifier(secondaryIdentifier),
+      ],
+    },
+  });
 };
 
 /**
@@ -75,13 +87,19 @@ export const createUserByAdmin = async (
 ) => {
   validateRoleHierarchy(performerRole, userData.role);
 
-  const emailExists = await findUserByAnyIdentifierWithoutError(userData.email);
-  if (emailExists) throw new AppError('Este e-mail já está em uso.', 400);
-
-  const usernameExists = await findUserByAnyIdentifierWithoutError(
+  const existingUser = await findUserByAnyIdentifierWithoutError(
+    userData.email,
     userData.username,
   );
-  if (usernameExists) throw new AppError('Este username já está em uso.', 400);
+
+  if (existingUser) {
+    if (existingUser.email === userData.email) {
+      throw new AppError('Este e-mail já está em uso.', 400);
+    }
+    if (existingUser.username === userData.username) {
+      throw new AppError('Este username já está em uso.', 400);
+    }
+  }
 
   return await db.user.create({
     data: {
@@ -91,7 +109,7 @@ export const createUserByAdmin = async (
   });
 };
 
-export const listAllUsers = async (options = {}) => {
+export const listUsers = async (options = {}) => {
   const {
     search,
     role,

@@ -10,6 +10,8 @@ import fastifyRateLimit from '@fastify/rate-limit';
 import apiRoutes from './routes/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import AppError from './utils/appError.js';
+import fastifySwaggerUi from '@fastify/swagger-ui';
+import fastifySwagger from '@fastify/swagger';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -54,6 +56,44 @@ if (process.env.NODE_ENV === 'production') {
     },
   });
 }
+
+await fastify.register(fastifySwagger, {
+  openapi: {
+    info: {
+      title: 'API Projeto Integrador - UNIVESP',
+      version: '1.0.0',
+      description:
+        'Documentação da API RESTful de Gestão de Patrimônio e Manutenções',
+    },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'Insira apenas o accessToken obtido no signin/setup',
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
+  },
+});
+
+await fastify.register(fastifySwaggerUi, {
+  routePrefix: '/api-docs',
+  uiConfig: {
+    docExpansion: 'list',
+    deepLinking: true,
+    requestInterceptor: (req) => {
+      req.credentials = 'include';
+      return req;
+    },
+  },
+});
 
 await fastify.register(apiRoutes, { prefix: '/api/v1' });
 

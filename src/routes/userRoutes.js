@@ -2,6 +2,7 @@ import * as userController from '../controllers/userController.js';
 import { protect, restrictTo } from '../middlewares/auth.js';
 import {
   adminCreateUserSchema,
+  identifierParamSchema,
   updateUserSchema,
 } from '../models/userSchema.js';
 
@@ -19,12 +20,21 @@ export default async function userRoutes(fastify, options) {
     userController.adminCreateUser,
   );
 
-  fastify.get('/:identifier', userController.getUser);
+  fastify.get(
+    '/:identifier',
+    {
+      schema: { params: identifierParamSchema },
+    },
+    userController.getUser,
+  );
 
   fastify.patch(
     '/:identifier',
     {
-      schema: { body: updateUserSchema },
+      schema: {
+        params: identifierParamSchema,
+        body: updateUserSchema,
+      },
     },
     userController.update,
   );
@@ -33,12 +43,16 @@ export default async function userRoutes(fastify, options) {
     '/:identifier',
     {
       preHandler: [restrictTo('root')],
+      schema: { params: identifierParamSchema },
     },
     userController.deleteUserByAdmin,
   );
 
   fastify.patch(
     '/:identifier/deactivate',
+    {
+      schema: { params: identifierParamSchema },
+    },
     userController.deactivateUserByAdmin,
   );
 }

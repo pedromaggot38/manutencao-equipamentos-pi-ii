@@ -34,23 +34,76 @@ const userBaseFields = Type.Object({
   ),
 });
 
-export const adminCreateUserSchema = Type.Intersect([
-  userBaseFields,
-  passwordConfirmationFields,
-  Type.Object({
-    role: UserRole,
-  }),
-]);
+// --- Schemas de Criação Separados para o Swagger ---
 
-export const registerSchema = Type.Intersect([
-  userBaseFields,
-  passwordConfirmationFields,
-]);
+export const setupSchema = Type.Intersect(
+  [userBaseFields, passwordConfirmationFields],
+  {
+    examples: [
+      {
+        name: 'Usuário Root',
+        username: 'root',
+        email: 'root@root.com',
+        password: 'root',
+        passwordConfirm: 'root',
+      },
+    ],
+  },
+);
 
-export const loginSchema = Type.Object({
-  username: Type.String({ minLength: 1 }),
-  password: Type.String({ minLength: 1 }),
-});
+export const registerSchema = Type.Intersect(
+  [userBaseFields, passwordConfirmationFields],
+  {
+    examples: [
+      {
+        name: 'Usuário Padrão',
+        username: 'user',
+        email: 'user@user.com',
+        password: 'user',
+        passwordConfirm: 'user',
+      },
+    ],
+  },
+);
+
+export const adminCreateUserSchema = Type.Intersect(
+  [
+    userBaseFields,
+    passwordConfirmationFields,
+    Type.Object({
+      role: UserRole,
+    }),
+  ],
+  {
+    examples: [
+      {
+        name: 'Usuário Administrador',
+        username: 'admin',
+        email: 'admin@admin.com',
+        password: 'admin',
+        passwordConfirm: 'admin',
+        role: 'admin',
+      },
+    ],
+  },
+);
+
+// --- Demais Schemas ---
+
+export const loginSchema = Type.Object(
+  {
+    username: Type.String({ minLength: 1 }),
+    password: Type.String({ minLength: 1 }),
+  },
+  {
+    examples: [
+      {
+        username: 'root',
+        password: 'root',
+      },
+    ],
+  },
+);
 
 export const updateUserSchema = Type.Partial(
   Type.Intersect([
@@ -60,36 +113,111 @@ export const updateUserSchema = Type.Partial(
       status: Type.Optional(UserStatus),
     }),
   ]),
+  {
+    examples: [
+      {
+        name: 'Nome Atualizado',
+        role: 'admin',
+        status: 'active',
+      },
+    ],
+  },
 );
 
 export const updateMeSchema = Type.Partial(
   Type.Pick(userBaseFields, ['name', 'username', 'avatar', 'phone']),
+  {
+    examples: [
+      {
+        name: 'Meu Novo Nome',
+        phone: '11999999999',
+      },
+    ],
+  },
 );
 
-export const updateMyPasswordSchema = Type.Object({
-  currentPassword: Type.String({ minLength: 1 }),
-  newPassword: Type.String({ minLength: 4 }), // Referência manual ao minLength
-  passwordConfirm: Type.String({ minLength: 4 }),
-});
+export const updateMyPasswordSchema = Type.Object(
+  {
+    currentPassword: Type.String({ minLength: 1 }),
+    newPassword: Type.String({ minLength: 4 }),
+    passwordConfirm: Type.String({ minLength: 4 }),
+  },
+  {
+    examples: [
+      {
+        currentPassword: 'senha_atual',
+        newPassword: 'nova_senha123',
+        passwordConfirm: 'nova_senha123',
+      },
+    ],
+  },
+);
 
-export const requestEmailChangeSchema = Type.Object({
-  newEmail: Type.String({ format: 'email' }),
-});
+export const requestEmailChangeSchema = Type.Object(
+  {
+    newEmail: Type.String({ format: 'email' }),
+  },
+  {
+    examples: [
+      {
+        newEmail: 'novo_email@novo.com',
+      },
+    ],
+  },
+);
 
-export const verifyOtpSchema = Type.Object({
-  token: Type.String({ minLength: 6, maxLength: 6 }),
-});
+export const verifyOtpSchema = Type.Object(
+  {
+    token: Type.String({ minLength: 6, maxLength: 6 }),
+  },
+  {
+    examples: [
+      {
+        token: '123456',
+      },
+    ],
+  },
+);
 
-export const forgotPasswordSchema = Type.Object({
-  identifier: Type.String({ minLength: 1 }),
-});
+export const forgotPasswordSchema = Type.Object(
+  {
+    identifier: Type.String({ minLength: 1 }),
+  },
+  {
+    examples: [
+      {
+        identifier: 'root',
+      },
+    ],
+  },
+);
 
-export const resetPasswordSchema = Type.Object({
-  token: Type.String({ minLength: 6, maxLength: 6 }),
-  password: Type.String({ minLength: 4 }),
-  passwordConfirm: Type.String({ minLength: 4 }),
-});
+export const resetPasswordSchema = Type.Object(
+  {
+    token: Type.String({ minLength: 6, maxLength: 6 }),
+    password: Type.String({ minLength: 4 }),
+    passwordConfirm: Type.String({ minLength: 4 }),
+  },
+  {
+    examples: [
+      {
+        token: '123456',
+        password: 'nova_senha123',
+        passwordConfirm: 'nova_senha123',
+      },
+    ],
+  },
+);
 
-export const deactivateMeSchema = Type.Object({
-  password: Type.String({ minLength: 1 }),
-});
+export const deactivateMeSchema = Type.Object(
+  {
+    password: Type.String({ minLength: 1 }),
+  },
+  {
+    examples: [
+      {
+        password: 'senha_atual_para_desativar',
+      },
+    ],
+  },
+);

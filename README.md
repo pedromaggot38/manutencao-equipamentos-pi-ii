@@ -53,7 +53,6 @@ Trata-se de uma API RESTful de alta performance projetada para resolver problema
 ├── src/                     # Código-fonte principal da API
 │   ├── config/              # Configurações de banco de dados e plugins
 │   ├── controllers/         # Lógica de controle das requisições e respostas
-│   ├── docs/                # Arquivos e definições do Swagger (API Docs)
 │   ├── middlewares/         # Interceptadores (Upload, Autenticação, Permissões)
 │   ├── models/              # Schemas de validação estrita (TypeBox)
 │   ├── routes/              # Mapeamento e definição de todos os endpoints

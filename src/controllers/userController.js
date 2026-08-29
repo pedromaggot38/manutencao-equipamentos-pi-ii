@@ -11,7 +11,7 @@ import { deleteFile, getFileUrl } from '../utils/fileUpload.js';
 import { validateRoleHierarchy } from '../utils/controllers/userUtils.js';
 
 export const listUsers = async (request, reply) => {
-  const { users, pagination } = await userService.listAllUsers(request.query);
+  const { users, pagination } = await userService.listUsers(request.query);
 
   return resfc({
     reply,
