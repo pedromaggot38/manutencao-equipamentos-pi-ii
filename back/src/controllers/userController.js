@@ -67,21 +67,6 @@ export const getUser = async (request, reply) => {
   });
 };
 
-export const deactivateUserByAdmin = async (request, reply) => {
-  const identifier = normalizeInput(request.params.identifier);
-  const targetUser = await userService.findUserByAnyIdentifier(identifier);
-
-  validateRoleHierarchy(request.user.role, targetUser.role);
-
-  await userService.deactivateUserAccount(targetUser.id);
-
-  return resfc({
-    reply,
-    code: 200,
-    message: `A conta do usuário ${targetUser.username} foi desativada com sucesso pelo administrador.`,
-  });
-};
-
 export const deleteUserByAdmin = async (request, reply) => {
   const identifier = normalizeInput(request.params.identifier);
   const targetUser = await userService.findUserByAnyIdentifier(identifier);

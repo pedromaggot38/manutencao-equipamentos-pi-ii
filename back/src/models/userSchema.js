@@ -27,7 +27,12 @@ const userBaseFields = Type.Object({
   email: Type.String({ format: 'email' }),
   password: Type.String({ minLength: 4 }),
   avatar: Type.Optional(
-    Type.Union([Type.String({ format: 'uri' }), Type.Literal('')]),
+    Type.Union([
+      Type.String({ pattern: '^https?:\\/\\/.+' }),
+      Type.String({ pattern: '^\\/(public|uploads)\\/.+' }),
+      Type.Literal(''),
+      Type.Null(),
+    ]),
   ),
   phone: Type.Optional(
     Type.Union([Type.String({ minLength: 10 }), Type.Literal('')]),

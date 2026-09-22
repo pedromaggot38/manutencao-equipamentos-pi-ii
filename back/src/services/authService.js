@@ -51,7 +51,7 @@ export const authenticate = async (username, password, clientInfo) => {
   const user = await db.user.findUnique({ where: { username } });
 
   if (!user || !(await bcrypt.compare(password, user.password))) {
-    throw new AppError('Username ou password incorretos', 401);
+    throw new AppError('Nome de usuário ou senha incorretos', 401);
   }
 
   const allowedStatuses = ['active', 'pending'];

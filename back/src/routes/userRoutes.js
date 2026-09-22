@@ -47,12 +47,4 @@ export default async function userRoutes(fastify, options) {
     },
     userController.deleteUserByAdmin,
   );
-
-  fastify.patch(
-    '/:identifier/deactivate',
-    {
-      schema: { params: identifierParamSchema },
-    },
-    userController.deactivateUserByAdmin,
-  );
 }
