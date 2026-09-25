@@ -1,0 +1,2847 @@
+[
+  {
+    "model": "app_manutencao.predio",
+    "pk": 1,
+    "fields": {
+      "nome_predio": "Complexo Central de Exatas",
+      "descricao": "CCE"
+    }
+  },
+  {
+    "model": "app_manutencao.predio",
+    "pk": 2,
+    "fields": {
+      "nome_predio": "Prédio da Administração e Reitoria",
+      "descricao": "PAR"
+    }
+  },
+  {
+    "model": "app_manutencao.predio",
+    "pk": 3,
+    "fields": {
+      "nome_predio": "Centro de Tecnologia e Automação",
+      "descricao": "CTA"
+    }
+  },
+  {
+    "model": "app_manutencao.predio",
+    "pk": 4,
+    "fields": {
+      "nome_predio": "Biblioteca Universitária Integrada",
+      "descricao": "BUI"
+    }
+  },
+  {
+    "model": "app_manutencao.predio",
+    "pk": 5,
+    "fields": {
+      "nome_predio": "Pavilhão de Atividades Didáticas e Convenções",
+      "descricao": "PADC"
+    }
+  },
+  {
+    "model": "app_manutencao.predio",
+    "pk": 6,
+    "fields": {
+      "nome_predio": "Parque Operacional e Almoxarifado Central",
+      "descricao": "POAC"
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 1,
+    "fields": {
+      "nome_local": "CTA - Datacenter Principal 01",
+      "predio": 3
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 2,
+    "fields": {
+      "nome_local": "CTA - Datacenter Secundário 02",
+      "predio": 3
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 3,
+    "fields": {
+      "nome_local": "CTA - Laboratório de Redes e Telecom",
+      "predio": 3
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 4,
+    "fields": {
+      "nome_local": "CTA - Laboratório de Robótica Aplicada",
+      "predio": 3
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 5,
+    "fields": {
+      "nome_local": "CCE - Sala de Aula 101",
+      "predio": 1
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 6,
+    "fields": {
+      "nome_local": "CCE - Sala de Aula 102",
+      "predio": 1
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 7,
+    "fields": {
+      "nome_local": "CCE - Sala de Aula 103",
+      "predio": 1
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 8,
+    "fields": {
+      "nome_local": "CCE - Sala de Aula 104",
+      "predio": 1
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 9,
+    "fields": {
+      "nome_local": "PAR - Gabinete da Reitoria",
+      "predio": 2
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 10,
+    "fields": {
+      "nome_local": "PAR - Secretaria Geral Acadêmica",
+      "predio": 2
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 11,
+    "fields": {
+      "nome_local": "PAR - Seção de Finanças e Contabilidade",
+      "predio": 2
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 12,
+    "fields": {
+      "nome_local": "PAR - Recursos Humanos e Gestão de Pessoas",
+      "predio": 2
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 13,
+    "fields": {
+      "nome_local": "BUI - Saguão Principal de Entrada",
+      "predio": 4
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 14,
+    "fields": {
+      "nome_local": "BUI - Salão Silencioso de Estudos",
+      "predio": 4
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 15,
+    "fields": {
+      "nome_local": "BUI - Acervo Histórico e Documental",
+      "predio": 4
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 16,
+    "fields": {
+      "nome_local": "PADC - Auditório Nobre Magna",
+      "predio": 5
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 17,
+    "fields": {
+      "nome_local": "PADC - Anfiteatro de Palestras B",
+      "predio": 5
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 18,
+    "fields": {
+      "nome_local": "PADC - Hall de Exposição e Convivência",
+      "predio": 5
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 19,
+    "fields": {
+      "nome_local": "POAC - Oficina de Manutenção Eletromecânica",
+      "predio": 6
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 20,
+    "fields": {
+      "nome_local": "POAC - Depósito de Materiais e Peças",
+      "predio": 6
+    }
+  },
+  {
+    "model": "app_manutencao.grupo",
+    "pk": 1,
+    "fields": {
+      "nome_grupo": "Climatização Térmica"
+    }
+  },
+  {
+    "model": "app_manutencao.grupo",
+    "pk": 2,
+    "fields": {
+      "nome_grupo": "Tratamento e Água"
+    }
+  },
+  {
+    "model": "app_manutencao.grupo",
+    "pk": 3,
+    "fields": {
+      "nome_grupo": "Exaustão e Fluxo de Ar"
+    }
+  },
+  {
+    "model": "app_manutencao.categoria",
+    "pk": 1,
+    "fields": {
+      "nome_categoria": "Ar Condicionado Split Hi-Wall",
+      "grupo": 1
+    }
+  },
+  {
+    "model": "app_manutencao.categoria",
+    "pk": 2,
+    "fields": {
+      "nome_categoria": "Ar Condicionado Split Piso-Teto",
+      "grupo": 1
+    }
+  },
+  {
+    "model": "app_manutencao.categoria",
+    "pk": 3,
+    "fields": {
+      "nome_categoria": "Condicionador Central Dutado",
+      "grupo": 1
+    }
+  },
+  {
+    "model": "app_manutencao.categoria",
+    "pk": 4,
+    "fields": {
+      "nome_categoria": "Ar Condicionado de Precisão para Datacenter",
+      "grupo": 1
+    }
+  },
+  {
+    "model": "app_manutencao.categoria",
+    "pk": 5,
+    "fields": {
+      "nome_categoria": "Purificador Refrigerado de Bancada",
+      "grupo": 2
+    }
+  },
+  {
+    "model": "app_manutencao.categoria",
+    "pk": 6,
+    "fields": {
+      "nome_categoria": "Bebedouro Industrial em Coluna",
+      "grupo": 2
+    }
+  },
+  {
+    "model": "app_manutencao.categoria",
+    "pk": 7,
+    "fields": {
+      "nome_categoria": "Cortina de Ar com Barreira Térmica",
+      "grupo": 3
+    }
+  },
+  {
+    "model": "app_manutencao.marca",
+    "pk": 1,
+    "fields": {
+      "marca": "AuraClima Tech"
+    }
+  },
+  {
+    "model": "app_manutencao.marca",
+    "pk": 2,
+    "fields": {
+      "marca": "Polaris Industrial"
+    }
+  },
+  {
+    "model": "app_manutencao.marca",
+    "pk": 3,
+    "fields": {
+      "marca": "Vortex Systems"
+    }
+  },
+  {
+    "model": "app_manutencao.marca",
+    "pk": 4,
+    "fields": {
+      "marca": "EcoFrost Brasil"
+    }
+  },
+  {
+    "model": "app_manutencao.marca",
+    "pk": 5,
+    "fields": {
+      "marca": "PureAqua Equipamentos"
+    }
+  },
+  {
+    "model": "app_manutencao.marca",
+    "pk": 6,
+    "fields": {
+      "marca": "HidroMax Soluções"
+    }
+  },
+  {
+    "model": "app_manutencao.marca",
+    "pk": 7,
+    "fields": {
+      "marca": "AirShield Engenharia"
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 1,
+    "fields": {
+      "patrimonio": "EQ-2026-001",
+      "capacidade": "12000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "2490.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-12INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 5
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 2,
+    "fields": {
+      "patrimonio": "EQ-2026-002",
+      "capacidade": "12000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "2490.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-12INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 6
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 3,
+    "fields": {
+      "patrimonio": "EQ-2026-003",
+      "capacidade": "18000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "3150.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-18INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 7
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 4,
+    "fields": {
+      "patrimonio": "EQ-2026-004",
+      "capacidade": "18000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "3150.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-18INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 8
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 5,
+    "fields": {
+      "patrimonio": "EQ-2026-005",
+      "capacidade": "36000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "6700.00",
+      "situacao": "Ativo",
+      "tipo": "Piso-Teto",
+      "modelo": "POL-PT36",
+      "categoria": 2,
+      "marca": 2,
+      "local": 16
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 6,
+    "fields": {
+      "patrimonio": "EQ-2026-006",
+      "capacidade": "36000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "6700.00",
+      "situacao": "Ativo",
+      "tipo": "Piso-Teto",
+      "modelo": "POL-PT36",
+      "categoria": 2,
+      "marca": 2,
+      "local": 16
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 7,
+    "fields": {
+      "patrimonio": "EQ-2026-007",
+      "capacidade": "36000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "6700.00",
+      "situacao": "Ativo",
+      "tipo": "Piso-Teto",
+      "modelo": "POL-PT36",
+      "categoria": 2,
+      "marca": 2,
+      "local": 17
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 8,
+    "fields": {
+      "patrimonio": "EQ-2026-008",
+      "capacidade": "60000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "11800.00",
+      "situacao": "Ativo",
+      "tipo": "Piso-Teto",
+      "modelo": "VX-PT60",
+      "categoria": 2,
+      "marca": 3,
+      "local": 14
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 9,
+    "fields": {
+      "patrimonio": "EQ-2026-009",
+      "capacidade": "60000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "11800.00",
+      "situacao": "Ativo",
+      "tipo": "Piso-Teto",
+      "modelo": "VX-PT60",
+      "categoria": 2,
+      "marca": 3,
+      "local": 14
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 10,
+    "fields": {
+      "patrimonio": "EQ-2026-010",
+      "capacidade": "40000.00",
+      "unidade_medida": "BTUs por hora",
+      "valor_bem": "54200.00",
+      "situacao": "Ativo",
+      "tipo": "Precisão InRow",
+      "modelo": "PREC-DATA-40",
+      "categoria": 4,
+      "marca": 4,
+      "local": 1
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 11,
+    "fields": {
+      "patrimonio": "EQ-2026-011",
+      "capacidade": "40000.00",
+      "unidade_medida": "BTUs por hora",
+      "valor_bem": "54200.00",
+      "situacao": "Ativo",
+      "tipo": "Precisão InRow",
+      "modelo": "PREC-DATA-40",
+      "categoria": 4,
+      "marca": 4,
+      "local": 1
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 12,
+    "fields": {
+      "patrimonio": "EQ-2026-012",
+      "capacidade": "35000.00",
+      "unidade_medida": "BTUs por hora",
+      "valor_bem": "48900.00",
+      "situacao": "Ativo",
+      "tipo": "Precisão InRow",
+      "modelo": "PREC-DATA-35",
+      "categoria": 4,
+      "marca": 4,
+      "local": 2
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 13,
+    "fields": {
+      "patrimonio": "EQ-2026-013",
+      "capacidade": "15.00",
+      "unidade_medida": "TR",
+      "valor_bem": "32000.00",
+      "situacao": "Ativo",
+      "tipo": "Self Contained",
+      "modelo": "CENTRAL-15TR",
+      "categoria": 3,
+      "marca": 2,
+      "local": 15
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 14,
+    "fields": {
+      "patrimonio": "EQ-2026-014",
+      "capacidade": "2.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1350.00",
+      "situacao": "Ativo",
+      "tipo": "Purificador Eletrônico",
+      "modelo": "PA-FLEX-02",
+      "categoria": 5,
+      "marca": 5,
+      "local": 9
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 15,
+    "fields": {
+      "patrimonio": "EQ-2026-015",
+      "capacidade": "2.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1350.00",
+      "situacao": "Ativo",
+      "tipo": "Purificador Eletrônico",
+      "modelo": "PA-FLEX-02",
+      "categoria": 5,
+      "marca": 5,
+      "local": 10
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 16,
+    "fields": {
+      "patrimonio": "EQ-2026-016",
+      "capacidade": "2.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1350.00",
+      "situacao": "Ativo",
+      "tipo": "Purificador Eletrônico",
+      "modelo": "PA-FLEX-02",
+      "categoria": 5,
+      "marca": 5,
+      "local": 11
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 17,
+    "fields": {
+      "patrimonio": "EQ-2026-017",
+      "capacidade": "100.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1890.00",
+      "situacao": "Ativo",
+      "tipo": "Coluna Industrial",
+      "modelo": "HM-IND100",
+      "categoria": 6,
+      "marca": 6,
+      "local": 13
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 18,
+    "fields": {
+      "patrimonio": "EQ-2026-018",
+      "capacidade": "100.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1890.00",
+      "situacao": "Ativo",
+      "tipo": "Coluna Industrial",
+      "modelo": "HM-IND100",
+      "categoria": 6,
+      "marca": 6,
+      "local": 18
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 19,
+    "fields": {
+      "patrimonio": "EQ-2026-019",
+      "capacidade": "120.00",
+      "unidade_medida": "Centímetros",
+      "valor_bem": "950.00",
+      "situacao": "Ativo",
+      "tipo": "Cortina Frontal",
+      "modelo": "AS-120C",
+      "categoria": 7,
+      "marca": 7,
+      "local": 13
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 20,
+    "fields": {
+      "patrimonio": "EQ-2026-020",
+      "capacidade": "150.00",
+      "unidade_medida": "Centímetros",
+      "valor_bem": "1200.00",
+      "situacao": "Ativo",
+      "tipo": "Cortina Frontal",
+      "modelo": "AS-150C",
+      "categoria": 7,
+      "marca": 7,
+      "local": 18
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 21,
+    "fields": {
+      "patrimonio": "EQ-2026-021",
+      "capacidade": "24000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "4100.00",
+      "situacao": "Em Manutenção",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-24INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 3
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 22,
+    "fields": {
+      "patrimonio": "EQ-2026-022",
+      "capacidade": "24000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "4100.00",
+      "situacao": "Em Manutenção",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-24INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 4
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 23,
+    "fields": {
+      "patrimonio": "EQ-2026-023",
+      "capacidade": "100.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1890.00",
+      "situacao": "Em Manutenção",
+      "tipo": "Coluna Industrial",
+      "modelo": "HM-IND100",
+      "categoria": 6,
+      "marca": 6,
+      "local": 19
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 24,
+    "fields": {
+      "patrimonio": "EQ-2026-024",
+      "capacidade": "10000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "1.00",
+      "situacao": "Baixado",
+      "tipo": "Janela Antigo",
+      "modelo": "LEG-J10",
+      "categoria": 1,
+      "marca": 2,
+      "local": 20
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 25,
+    "fields": {
+      "patrimonio": "EQ-2026-025",
+      "capacidade": "12000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "1.00",
+      "situacao": "Baixado",
+      "tipo": "Janela Antigo",
+      "modelo": "LEG-J12",
+      "categoria": 1,
+      "marca": 2,
+      "local": 20
+    }
+  },
+  {
+    "model": "app_manutencao.fornecedor",
+    "pk": 1,
+    "fields": {
+      "razao_social": "Soluções em Engenharia Térmica Nexus Ltda",
+      "cnpj": "12.345.678/0001-90",
+      "telefone": "(11) 3211-4500",
+      "email": "contato@nexustermica.com.br"
+    }
+  },
+  {
+    "model": "app_manutencao.fornecedor",
+    "pk": 2,
+    "fields": {
+      "razao_social": "PurificaTec Instalações Hidráulicas Eireli",
+      "cnpj": "23.456.789/0001-01",
+      "telefone": "(11) 3344-8899",
+      "email": "suporte@purificatec.com.br"
+    }
+  },
+  {
+    "model": "app_manutencao.fornecedor",
+    "pk": 3,
+    "fields": {
+      "razao_social": "Vanguarda Manutenção Mecânica e Frio ME",
+      "cnpj": "34.567.890/0001-12",
+      "telefone": "(11) 98765-4321",
+      "email": "comercial@vanguardafrio.com.br"
+    }
+  },
+  {
+    "model": "app_manutencao.fornecedor",
+    "pk": 4,
+    "fields": {
+      "razao_social": "Apex Clima Serviços e Equipamentos Industriais",
+      "cnpj": "45.678.901/0001-23",
+      "telefone": "(11) 3456-7890",
+      "email": "atendimento@apexclima.com.br"
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 1,
+    "fields": {
+      "data": "2026-01-15",
+      "nota_fiscal": "NFS-e 8801 - Série 1",
+      "fornecedor": 1,
+      "solicitacao": 10401,
+      "finalizado": true,
+      "forma_aquisicao": "Contrato",
+      "tipo_manutencao": "Preventiva",
+      "observacoes": "Revisão e limpeza preventiva de verão nas salas de aula de Exatas."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 2,
+    "fields": {
+      "data": "2026-02-10",
+      "nota_fiscal": "DANFE 14502 - Série A",
+      "fornecedor": 2,
+      "solicitacao": 10402,
+      "finalizado": true,
+      "forma_aquisicao": "Processo",
+      "tipo_manutencao": "Material",
+      "observacoes": "Troca programada de refis e kits de filtragem nos prédios administrativos."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 3,
+    "fields": {
+      "data": "2026-03-05",
+      "nota_fiscal": "NFS-e 8940 - Série 1",
+      "fornecedor": 3,
+      "solicitacao": 10403,
+      "finalizado": true,
+      "forma_aquisicao": "Adiantamento",
+      "tipo_manutencao": "Corretiva",
+      "observacoes": "Substituição emergencial de componente no auditório nobre antes de colação de grau."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 4,
+    "fields": {
+      "data": "2026-04-18",
+      "nota_fiscal": "NFS-e 9102 - Série 1",
+      "fornecedor": 4,
+      "solicitacao": 10404,
+      "finalizado": true,
+      "forma_aquisicao": "Contrato",
+      "tipo_manutencao": "Preventiva",
+      "observacoes": "Manutenção preventiva de alta complexidade nos sistemas de precisão do Datacenter."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 5,
+    "fields": {
+      "data": "2026-05-20",
+      "nota_fiscal": "DANFE 15890 - Série B",
+      "fornecedor": 1,
+      "solicitacao": 10405,
+      "finalizado": true,
+      "forma_aquisicao": "Processo",
+      "tipo_manutencao": "Material e Serviço",
+      "observacoes": "Readequação das linhas de cobre e carga de fluido refrigerante."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 6,
+    "fields": {
+      "data": "2026-06-12",
+      "nota_fiscal": "NFS-e 9450 - Série 1",
+      "fornecedor": 2,
+      "solicitacao": 10406,
+      "finalizado": true,
+      "forma_aquisicao": "Adiantamento",
+      "tipo_manutencao": "Serviço",
+      "observacoes": "Sanitização de cubas e desobstrução de dutos dos bebedouros de grande porte."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 7,
+    "fields": {
+      "data": "2026-07-08",
+      "nota_fiscal": "NFS-e 9620 - Série 1",
+      "fornecedor": 3,
+      "solicitacao": 10407,
+      "finalizado": true,
+      "forma_aquisicao": "Contrato",
+      "tipo_manutencao": "Preventiva",
+      "observacoes": "Higienização e revisão de rolamentos nas cortinas de ar da entrada."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 8,
+    "fields": {
+      "data": "2026-08-14",
+      "nota_fiscal": "NFS-e 9811 - Série 1",
+      "fornecedor": 1,
+      "solicitacao": 10408,
+      "finalizado": false,
+      "forma_aquisicao": "Processo",
+      "tipo_manutencao": "Corretiva",
+      "observacoes": "Aparelho do laboratório de redes apresentando erro intermitente de sobretensão."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 9,
+    "fields": {
+      "data": "2026-09-02",
+      "nota_fiscal": "DANFE 17200 - Série A",
+      "fornecedor": 4,
+      "solicitacao": 10409,
+      "finalizado": false,
+      "forma_aquisicao": "Adiantamento",
+      "tipo_manutencao": "Material e Serviço",
+      "observacoes": "Aguardando chegada de termostato para liberação do bebedouro da manutenção."
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 1,
+    "fields": {
+      "equipamento": 1,
+      "manutencao": 1,
+      "descricao": "Limpeza química de serpentina e desinfecção da evaporadora",
+      "quantidade": "1.00",
+      "valor_unitario": "180.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 2,
+    "fields": {
+      "equipamento": 2,
+      "manutencao": 1,
+      "descricao": "Limpeza química de serpentina e desinfecção da evaporadora",
+      "quantidade": "1.00",
+      "valor_unitario": "180.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 3,
+    "fields": {
+      "equipamento": 3,
+      "manutencao": 1,
+      "descricao": "Limpeza completa e verificação de dreno",
+      "quantidade": "1.00",
+      "valor_unitario": "200.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 4,
+    "fields": {
+      "equipamento": 4,
+      "manutencao": 1,
+      "descricao": "Limpeza completa e verificação de dreno",
+      "quantidade": "1.00",
+      "valor_unitario": "200.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 5,
+    "fields": {
+      "equipamento": 14,
+      "manutencao": 2,
+      "descricao": "Elemento filtrante microporoso com carvão ativado",
+      "quantidade": "1.00",
+      "valor_unitario": "165.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 6,
+    "fields": {
+      "equipamento": 15,
+      "manutencao": 2,
+      "descricao": "Elemento filtrante microporoso com carvão ativado",
+      "quantidade": "1.00",
+      "valor_unitario": "165.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 7,
+    "fields": {
+      "equipamento": 16,
+      "manutencao": 2,
+      "descricao": "Elemento filtrante microporoso com carvão ativado",
+      "quantidade": "1.00",
+      "valor_unitario": "165.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 8,
+    "fields": {
+      "equipamento": 5,
+      "manutencao": 3,
+      "descricao": "Substituição do contator elétrico trifásico e relé térmico",
+      "quantidade": "1.00",
+      "valor_unitario": "480.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 9,
+    "fields": {
+      "equipamento": 5,
+      "manutencao": 3,
+      "descricao": "Reparo em placa de sinal e parametrização do termostato",
+      "quantidade": "1.00",
+      "valor_unitario": "320.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 10,
+    "fields": {
+      "equipamento": 10,
+      "manutencao": 4,
+      "descricao": "Substituição do conjunto de filtros HEPA de alta retenção",
+      "quantidade": "2.00",
+      "valor_unitario": "850.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 11,
+    "fields": {
+      "equipamento": 11,
+      "manutencao": 4,
+      "descricao": "Substituição do conjunto de filtros HEPA de alta retenção",
+      "quantidade": "2.00",
+      "valor_unitario": "850.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 12,
+    "fields": {
+      "equipamento": 12,
+      "manutencao": 4,
+      "descricao": "Calibração e aferição dos sensores de umidade e temperatura",
+      "quantidade": "1.00",
+      "valor_unitario": "650.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 13,
+    "fields": {
+      "equipamento": 8,
+      "manutencao": 5,
+      "descricao": "Solda de linha frigorígena e eliminação de microvazamento",
+      "quantidade": "1.00",
+      "valor_unitario": "450.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 14,
+    "fields": {
+      "equipamento": 8,
+      "manutencao": 5,
+      "descricao": "Carga completa de fluido refrigerante ecológico R-410A (kg)",
+      "quantidade": "4.50",
+      "valor_unitario": "110.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 15,
+    "fields": {
+      "equipamento": 17,
+      "manutencao": 6,
+      "descricao": "Desmontagem, higienização mecânica da serpentina e sanitização",
+      "quantidade": "1.00",
+      "valor_unitario": "340.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 16,
+    "fields": {
+      "equipamento": 18,
+      "manutencao": 6,
+      "descricao": "Desmontagem, higienização mecânica da serpentina e sanitização",
+      "quantidade": "1.00",
+      "valor_unitario": "340.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 17,
+    "fields": {
+      "equipamento": 19,
+      "manutencao": 7,
+      "descricao": "Limpeza interna da turbina tangencial e alinhamento dos mancais",
+      "quantidade": "1.00",
+      "valor_unitario": "190.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 18,
+    "fields": {
+      "equipamento": 20,
+      "manutencao": 7,
+      "descricao": "Limpeza interna da turbina tangencial e alinhamento dos mancais",
+      "quantidade": "1.00",
+      "valor_unitario": "220.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 19,
+    "fields": {
+      "equipamento": 21,
+      "manutencao": 8,
+      "descricao": "Troca de placa controladora Inverter externa IPM",
+      "quantidade": "1.00",
+      "valor_unitario": "790.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 20,
+    "fields": {
+      "equipamento": 23,
+      "manutencao": 9,
+      "descricao": "Termostato regulador de temperatura para bebedouro industrial",
+      "quantidade": "1.00",
+      "valor_unitario": "140.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 21,
+    "fields": {
+      "equipamento": 23,
+      "manutencao": 9,
+      "descricao": "Substituição de torneira tipo alavanca em aço inox 304",
+      "quantidade": "2.00",
+      "valor_unitario": "95.00"
+    }
+  },
+  {
+    "model": "app_manutencao.predio",
+    "pk": 7,
+    "fields": {
+      "nome_predio": "Pavilhão de Engenharias e Oficinas Especiais",
+      "descricao": "PEOE"
+    }
+  },
+  {
+    "model": "app_manutencao.predio",
+    "pk": 8,
+    "fields": {
+      "nome_predio": "Centro de Vivência e Ginásio Poliesportivo",
+      "descricao": "CVGP"
+    }
+  },
+  {
+    "model": "app_manutencao.predio",
+    "pk": 9,
+    "fields": {
+      "nome_predio": "Edifício de Extensão Universitária e Incubadora",
+      "descricao": "EEUI"
+    }
+  },
+  {
+    "model": "app_manutencao.predio",
+    "pk": 10,
+    "fields": {
+      "nome_predio": "Núcleo de Práticas Jurídicas e Assistenciais",
+      "descricao": "NPJA"
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 21,
+    "fields": {
+      "nome_local": "PEOE - Laboratório de Automação e Controle",
+      "predio": 7
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 22,
+    "fields": {
+      "nome_local": "PEOE - Sala de Projetos e Prototipagem 3D",
+      "predio": 7
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 23,
+    "fields": {
+      "nome_local": "PEOE - Oficina Mecânica Pesada",
+      "predio": 7
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 24,
+    "fields": {
+      "nome_local": "CVGP - Quadra Coberta Poliesportiva",
+      "predio": 8
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 25,
+    "fields": {
+      "nome_local": "CVGP - Vestiários e Sala de Preparação Física",
+      "predio": 8
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 26,
+    "fields": {
+      "nome_local": "CVGP - Praça de Alimentação Interna",
+      "predio": 8
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 27,
+    "fields": {
+      "nome_local": "EEUI - Coworking da Incubadora de Empresas",
+      "predio": 9
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 28,
+    "fields": {
+      "nome_local": "EEUI - Sala de Reunião e Videoconferência",
+      "predio": 9
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 29,
+    "fields": {
+      "nome_local": "NPJA - Sala de Audiências Simuladas",
+      "predio": 10
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 30,
+    "fields": {
+      "nome_local": "NPJA - Recepção e Triagem Social",
+      "predio": 10
+    }
+  },
+  {
+    "model": "app_manutencao.fornecedor",
+    "pk": 5,
+    "fields": {
+      "razao_social": "TermoControl Automação e Frio Comercial Ltda",
+      "cnpj": "56.789.012/0001-34",
+      "telefone": "(11) 3221-8900",
+      "email": "vendas@termocontrol.com.br"
+    }
+  },
+  {
+    "model": "app_manutencao.fornecedor",
+    "pk": 6,
+    "fields": {
+      "razao_social": "HidroSane Filtros e Tubulações Industriais",
+      "cnpj": "67.890.123/0001-45",
+      "telefone": "(11) 3788-9911",
+      "email": "servicos@hidrosane.com.br"
+    }
+  },
+  {
+    "model": "app_manutencao.fornecedor",
+    "pk": 7,
+    "fields": {
+      "razao_social": "Delta Climatização & Serviços Rápidos EPP",
+      "cnpj": "78.901.234/0001-56",
+      "telefone": "(11) 97123-4567",
+      "email": "operacional@deltaclima.com.br"
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 26,
+    "fields": {
+      "patrimonio": "EQ-2026-026",
+      "capacidade": "18000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "3200.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-18INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 21
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 27,
+    "fields": {
+      "patrimonio": "EQ-2026-027",
+      "capacidade": "18000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "3200.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-18INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 22
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 28,
+    "fields": {
+      "patrimonio": "EQ-2026-028",
+      "capacidade": "24000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "4250.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-24INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 23
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 29,
+    "fields": {
+      "patrimonio": "EQ-2026-029",
+      "capacidade": "60000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "12400.00",
+      "situacao": "Ativo",
+      "tipo": "Piso-Teto",
+      "modelo": "POL-PT60",
+      "categoria": 2,
+      "marca": 2,
+      "local": 24
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 30,
+    "fields": {
+      "patrimonio": "EQ-2026-030",
+      "capacidade": "60000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "12400.00",
+      "situacao": "Ativo",
+      "tipo": "Piso-Teto",
+      "modelo": "POL-PT60",
+      "categoria": 2,
+      "marca": 2,
+      "local": 24
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 31,
+    "fields": {
+      "patrimonio": "EQ-2026-031",
+      "capacidade": "36000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "6900.00",
+      "situacao": "Ativo",
+      "tipo": "Piso-Teto",
+      "modelo": "VX-PT36",
+      "categoria": 2,
+      "marca": 3,
+      "local": 25
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 32,
+    "fields": {
+      "patrimonio": "EQ-2026-032",
+      "capacidade": "36000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "6900.00",
+      "situacao": "Ativo",
+      "tipo": "Piso-Teto",
+      "modelo": "VX-PT36",
+      "categoria": 2,
+      "marca": 3,
+      "local": 26
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 33,
+    "fields": {
+      "patrimonio": "EQ-2026-033",
+      "capacidade": "24000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "4150.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-24INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 27
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 34,
+    "fields": {
+      "patrimonio": "EQ-2026-034",
+      "capacidade": "12000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "2550.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-12INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 28
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 35,
+    "fields": {
+      "patrimonio": "EQ-2026-035",
+      "capacidade": "18000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "3100.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-18INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 29
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 36,
+    "fields": {
+      "patrimonio": "EQ-2026-036",
+      "capacidade": "12000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "2450.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-12INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 30
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 37,
+    "fields": {
+      "patrimonio": "EQ-2026-037",
+      "capacidade": "2.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1380.00",
+      "situacao": "Ativo",
+      "tipo": "Purificador Eletrônico",
+      "modelo": "PA-FLEX-02",
+      "categoria": 5,
+      "marca": 5,
+      "local": 27
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 38,
+    "fields": {
+      "patrimonio": "EQ-2026-038",
+      "capacidade": "2.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1380.00",
+      "situacao": "Ativo",
+      "tipo": "Purificador Eletrônico",
+      "modelo": "PA-FLEX-02",
+      "categoria": 5,
+      "marca": 5,
+      "local": 30
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 39,
+    "fields": {
+      "patrimonio": "EQ-2026-039",
+      "capacidade": "100.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1950.00",
+      "situacao": "Ativo",
+      "tipo": "Coluna Industrial",
+      "modelo": "HM-IND100",
+      "categoria": 6,
+      "marca": 6,
+      "local": 24
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 40,
+    "fields": {
+      "patrimonio": "EQ-2026-040",
+      "capacidade": "100.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1950.00",
+      "situacao": "Ativo",
+      "tipo": "Coluna Industrial",
+      "modelo": "HM-IND100",
+      "categoria": 6,
+      "marca": 6,
+      "local": 26
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 41,
+    "fields": {
+      "patrimonio": "EQ-2026-041",
+      "capacidade": "120.00",
+      "unidade_medida": "Centímetros",
+      "valor_bem": "980.00",
+      "situacao": "Ativo",
+      "tipo": "Cortina Frontal",
+      "modelo": "AS-120C",
+      "categoria": 7,
+      "marca": 7,
+      "local": 26
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 42,
+    "fields": {
+      "patrimonio": "EQ-2026-042",
+      "capacidade": "150.00",
+      "unidade_medida": "Centímetros",
+      "valor_bem": "1250.00",
+      "situacao": "Ativo",
+      "tipo": "Cortina Frontal",
+      "modelo": "AS-150C",
+      "categoria": 7,
+      "marca": 7,
+      "local": 30
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 43,
+    "fields": {
+      "patrimonio": "EQ-2026-043",
+      "capacidade": "12000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "2490.00",
+      "situacao": "Em Manutenção",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-12INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 5
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 44,
+    "fields": {
+      "patrimonio": "EQ-2026-044",
+      "capacidade": "36000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "6800.00",
+      "situacao": "Em Manutenção",
+      "tipo": "Piso-Teto",
+      "modelo": "POL-PT36",
+      "categoria": 2,
+      "marca": 2,
+      "local": 17
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 45,
+    "fields": {
+      "patrimonio": "EQ-2026-045",
+      "capacidade": "2.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1350.00",
+      "situacao": "Em Manutenção",
+      "tipo": "Purificador Eletrônico",
+      "modelo": "PA-FLEX-02",
+      "categoria": 5,
+      "marca": 5,
+      "local": 9
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 46,
+    "fields": {
+      "patrimonio": "EQ-2026-046",
+      "capacidade": "100.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1890.00",
+      "situacao": "Em Manutenção",
+      "tipo": "Coluna Industrial",
+      "modelo": "HM-IND100",
+      "categoria": 6,
+      "marca": 6,
+      "local": 18
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 47,
+    "fields": {
+      "patrimonio": "EQ-2026-047",
+      "capacidade": "18000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "1.00",
+      "situacao": "Baixado",
+      "tipo": "Janela",
+      "modelo": "LEG-J18",
+      "categoria": 1,
+      "marca": 2,
+      "local": 20
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 48,
+    "fields": {
+      "patrimonio": "EQ-2026-048",
+      "capacidade": "24000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "1.00",
+      "situacao": "Baixado",
+      "tipo": "Split Antigo",
+      "modelo": "LEG-S24",
+      "categoria": 1,
+      "marca": 3,
+      "local": 20
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 49,
+    "fields": {
+      "patrimonio": "EQ-2026-049",
+      "capacidade": "100.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1.00",
+      "situacao": "Baixado",
+      "tipo": "Bebedouro Chapa",
+      "modelo": "LEG-B100",
+      "categoria": 6,
+      "marca": 6,
+      "local": 20
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 50,
+    "fields": {
+      "patrimonio": "EQ-2026-050",
+      "capacidade": "120.00",
+      "unidade_medida": "Centímetros",
+      "valor_bem": "1.00",
+      "situacao": "Baixado",
+      "tipo": "Cortina Básica",
+      "modelo": "LEG-C120",
+      "categoria": 7,
+      "marca": 7,
+      "local": 20
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 10,
+    "fields": {
+      "data": "2026-01-22",
+      "nota_fiscal": "NFS-e 11020 - Série 1",
+      "fornecedor": 5,
+      "solicitacao": 20101,
+      "finalizado": true,
+      "forma_aquisicao": "Contrato",
+      "tipo_manutencao": "Preventiva",
+      "observacoes": "Limpeza programada e revisão termográfica do bloco de Engenharias."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 11,
+    "fields": {
+      "data": "2026-02-14",
+      "nota_fiscal": "DANFE 18900 - Série A",
+      "fornecedor": 6,
+      "solicitacao": 20102,
+      "finalizado": true,
+      "forma_aquisicao": "Processo",
+      "tipo_manutencao": "Material",
+      "observacoes": "Lote de cartuchos filtrantes de reposição e conexões rápidas atóxicas."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 12,
+    "fields": {
+      "data": "2026-03-18",
+      "nota_fiscal": "NFS-e 11450 - Série 1",
+      "fornecedor": 7,
+      "solicitacao": 20103,
+      "finalizado": true,
+      "forma_aquisicao": "Adiantamento",
+      "tipo_manutencao": "Corretiva",
+      "observacoes": "Substituição do motor da hélice condensadora no Ginásio de Esportes."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 13,
+    "fields": {
+      "data": "2026-04-09",
+      "nota_fiscal": "NFS-e 11620 - Série 1",
+      "fornecedor": 5,
+      "solicitacao": 20104,
+      "finalizado": true,
+      "forma_aquisicao": "Contrato",
+      "tipo_manutencao": "Preventiva",
+      "observacoes": "Revisão e limpeza química nos aparelhos da Incubadora e Coworking."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 14,
+    "fields": {
+      "data": "2026-05-11",
+      "nota_fiscal": "DANFE 19230 - Série B",
+      "fornecedor": 6,
+      "solicitacao": 20105,
+      "finalizado": true,
+      "forma_aquisicao": "Processo",
+      "tipo_manutencao": "Material e Serviço",
+      "observacoes": "Troca de serpentinas de resfriamento e válvulas de retenção de água."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 15,
+    "fields": {
+      "data": "2026-06-25",
+      "nota_fiscal": "NFS-e 12040 - Série 1",
+      "fornecedor": 7,
+      "solicitacao": 20106,
+      "finalizado": true,
+      "forma_aquisicao": "Adiantamento",
+      "tipo_manutencao": "Serviço",
+      "observacoes": "Manutenção das cortinas de ar frontais com lubrificação geral."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 16,
+    "fields": {
+      "data": "2026-07-19",
+      "nota_fiscal": "NFS-e 12300 - Série 1",
+      "fornecedor": 1,
+      "solicitacao": 20107,
+      "finalizado": true,
+      "forma_aquisicao": "Contrato",
+      "tipo_manutencao": "Preventiva",
+      "observacoes": "Higienização semestral e testes de vazamento com nitrogênio."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 17,
+    "fields": {
+      "data": "2026-08-05",
+      "nota_fiscal": "NFS-e 12510 - Série 1",
+      "fornecedor": 3,
+      "solicitacao": 20108,
+      "finalizado": true,
+      "forma_aquisicao": "Processo",
+      "tipo_manutencao": "Corretiva",
+      "observacoes": "Substituição emergencial de relé de segurança e contatora no Auditório."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 18,
+    "fields": {
+      "data": "2026-08-28",
+      "nota_fiscal": "DANFE 20450 - Série A",
+      "fornecedor": 5,
+      "solicitacao": 20109,
+      "finalizado": false,
+      "forma_aquisicao": "Adiantamento",
+      "tipo_manutencao": "Material e Serviço",
+      "observacoes": "Aguardando chegada de placa controladora Inverter para finalizar reparo."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 19,
+    "fields": {
+      "data": "2026-09-15",
+      "nota_fiscal": "NFS-e 12890 - Série 1",
+      "fornecedor": 2,
+      "solicitacao": 20110,
+      "finalizado": false,
+      "forma_aquisicao": "Processo",
+      "tipo_manutencao": "Corretiva",
+      "observacoes": "Vazamento interno no bloco refrigerado do purificador sob análise técnica."
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 22,
+    "fields": {
+      "equipamento": 26,
+      "manutencao": 10,
+      "descricao": "Higienização completa de serpentina e bandeja de condensado",
+      "quantidade": "1.00",
+      "valor_unitario": "190.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 23,
+    "fields": {
+      "equipamento": 27,
+      "manutencao": 10,
+      "descricao": "Higienização completa de serpentina e bandeja de condensado",
+      "quantidade": "1.00",
+      "valor_unitario": "190.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 24,
+    "fields": {
+      "equipamento": 28,
+      "manutencao": 10,
+      "descricao": "Aplicação de bactericida aerossol e desobstrução de dreno",
+      "quantidade": "1.00",
+      "valor_unitario": "140.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 25,
+    "fields": {
+      "equipamento": 37,
+      "manutencao": 11,
+      "descricao": "Filtro refil blindado com sistema de ultrafiltração",
+      "quantidade": "2.00",
+      "valor_unitario": "175.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 26,
+    "fields": {
+      "equipamento": 38,
+      "manutencao": 11,
+      "descricao": "Filtro refil blindado com sistema de ultrafiltração",
+      "quantidade": "2.00",
+      "valor_unitario": "175.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 27,
+    "fields": {
+      "equipamento": 29,
+      "manutencao": 12,
+      "descricao": "Substituição do motor ventilador axial da condensadora externa",
+      "quantidade": "1.00",
+      "valor_unitario": "890.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 28,
+    "fields": {
+      "equipamento": 29,
+      "manutencao": 12,
+      "descricao": "Capacitor permanente duplo 45+5 uF 440V",
+      "quantidade": "1.00",
+      "valor_unitario": "85.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 29,
+    "fields": {
+      "equipamento": 33,
+      "manutencao": 13,
+      "descricao": "Limpeza química pesada com recolhimento de resíduos",
+      "quantidade": "1.00",
+      "valor_unitario": "240.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 30,
+    "fields": {
+      "equipamento": 34,
+      "manutencao": 13,
+      "descricao": "Limpeza química pesada com recolhimento de resíduos",
+      "quantidade": "1.00",
+      "valor_unitario": "210.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 31,
+    "fields": {
+      "equipamento": 39,
+      "manutencao": 14,
+      "descricao": "Substituição de torneira jato em latão cromado com regulagem",
+      "quantidade": "2.00",
+      "valor_unitario": "115.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 32,
+    "fields": {
+      "equipamento": 40,
+      "manutencao": 14,
+      "descricao": "Serpentina de resfriamento em cobre espiral para reservatório",
+      "quantidade": "1.00",
+      "valor_unitario": "420.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 33,
+    "fields": {
+      "equipamento": 41,
+      "manutencao": 15,
+      "descricao": "Ajuste e balanceamento dinâmico de rotor tangencial",
+      "quantidade": "1.00",
+      "valor_unitario": "160.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 34,
+    "fields": {
+      "equipamento": 42,
+      "manutencao": 15,
+      "descricao": "Ajuste e balanceamento dinâmico de rotor tangencial",
+      "quantidade": "1.00",
+      "valor_unitario": "180.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 35,
+    "fields": {
+      "equipamento": 31,
+      "manutencao": 16,
+      "descricao": "Higienização completa da unidade interna e externa",
+      "quantidade": "1.00",
+      "valor_unitario": "280.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 36,
+    "fields": {
+      "equipamento": 32,
+      "manutencao": 16,
+      "descricao": "Higienização completa da unidade interna e externa",
+      "quantidade": "1.00",
+      "valor_unitario": "280.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 37,
+    "fields": {
+      "equipamento": 30,
+      "manutencao": 17,
+      "descricao": "Substituição de contatora tripolar 32A com bobina 220V",
+      "quantidade": "1.00",
+      "valor_unitario": "260.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 38,
+    "fields": {
+      "equipamento": 30,
+      "manutencao": 17,
+      "descricao": "Relé térmico de proteção contra falta de fase",
+      "quantidade": "1.00",
+      "valor_unitario": "175.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 39,
+    "fields": {
+      "equipamento": 43,
+      "manutencao": 18,
+      "descricao": "Módulo eletrônico IPM Inverter da condensadora",
+      "quantidade": "1.00",
+      "valor_unitario": "720.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 40,
+    "fields": {
+      "equipamento": 43,
+      "manutencao": 18,
+      "descricao": "Mão de obra de diagnóstico e solda de componente smd",
+      "quantidade": "1.00",
+      "valor_unitario": "350.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 41,
+    "fields": {
+      "equipamento": 45,
+      "manutencao": 19,
+      "descricao": "Conjunto de válvulas solenoides e conexões de dreno",
+      "quantidade": "1.00",
+      "valor_unitario": "220.00"
+    }
+  },
+  {
+    "model": "app_manutencao.predio",
+    "pk": 11,
+    "fields": {
+      "nome_predio": "Restaurante Universitário e Praça de Convivência",
+      "descricao": "RUPC"
+    }
+  },
+  {
+    "model": "app_manutencao.predio",
+    "pk": 12,
+    "fields": {
+      "nome_predio": "Alojamento Estudantil e Bloco de Apoio",
+      "descricao": "AEBA"
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 31,
+    "fields": {
+      "nome_local": "RUPC - Salão Principal de Refeições",
+      "predio": 11
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 32,
+    "fields": {
+      "nome_local": "RUPC - Cozinha Industrial e Área de Pré-Preparo",
+      "predio": 11
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 33,
+    "fields": {
+      "nome_local": "RUPC - Câmara Fria e Despensa de Secos",
+      "predio": 11
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 34,
+    "fields": {
+      "nome_local": "AEBA - Sala de Estudos e Convivência Térreo",
+      "predio": 12
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 35,
+    "fields": {
+      "nome_local": "AEBA - Lavanderia Comunitária",
+      "predio": 12
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 36,
+    "fields": {
+      "nome_local": "PEOE - Laboratório de Motores e Combustão",
+      "predio": 7
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 37,
+    "fields": {
+      "nome_local": "CTA - Sala de Servidores Secundária - Rack 03",
+      "predio": 3
+    }
+  },
+  {
+    "model": "app_manutencao.local",
+    "pk": 38,
+    "fields": {
+      "nome_local": "PAR - Sala de Treinamento Corporativo",
+      "predio": 2
+    }
+  },
+  {
+    "model": "app_manutencao.fornecedor",
+    "pk": 8,
+    "fields": {
+      "razao_social": "KlimaTech Engenharia de Sistemas Térmicos Eireli",
+      "cnpj": "89.012.345/0001-67",
+      "telefone": "(11) 3641-2000",
+      "email": "contato@klimatech.com.br"
+    }
+  },
+  {
+    "model": "app_manutencao.fornecedor",
+    "pk": 9,
+    "fields": {
+      "razao_social": "AquaPure Manutenções e Equipamentos Hidráulicos ME",
+      "cnpj": "90.123.456/0001-78",
+      "telefone": "(11) 98111-2233",
+      "email": "suporte@aquapurebrasil.com.br"
+    }
+  },
+  {
+    "model": "app_manutencao.fornecedor",
+    "pk": 10,
+    "fields": {
+      "razao_social": "VentoForte Exaustores e Climatizadores Ltda",
+      "cnpj": "01.234.567/0001-89",
+      "telefone": "(11) 3789-5500",
+      "email": "atendimento@ventoforte.com.br"
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 51,
+    "fields": {
+      "patrimonio": "EQ-2026-051",
+      "capacidade": "60000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "12900.00",
+      "situacao": "Ativo",
+      "tipo": "Piso-Teto",
+      "modelo": "POL-PT60",
+      "categoria": 2,
+      "marca": 2,
+      "local": 31
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 52,
+    "fields": {
+      "patrimonio": "EQ-2026-052",
+      "capacidade": "60000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "12900.00",
+      "situacao": "Ativo",
+      "tipo": "Piso-Teto",
+      "modelo": "POL-PT60",
+      "categoria": 2,
+      "marca": 2,
+      "local": 31
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 53,
+    "fields": {
+      "patrimonio": "EQ-2026-053",
+      "capacidade": "60000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "12900.00",
+      "situacao": "Ativo",
+      "tipo": "Piso-Teto",
+      "modelo": "POL-PT60",
+      "categoria": 2,
+      "marca": 2,
+      "local": 31
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 54,
+    "fields": {
+      "patrimonio": "EQ-2026-054",
+      "capacidade": "100.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "2100.00",
+      "situacao": "Ativo",
+      "tipo": "Coluna Industrial",
+      "modelo": "HM-IND100",
+      "categoria": 6,
+      "marca": 6,
+      "local": 31
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 55,
+    "fields": {
+      "patrimonio": "EQ-2026-055",
+      "capacidade": "100.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "2100.00",
+      "situacao": "Ativo",
+      "tipo": "Coluna Industrial",
+      "modelo": "HM-IND100",
+      "categoria": 6,
+      "marca": 6,
+      "local": 31
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 56,
+    "fields": {
+      "patrimonio": "EQ-2026-056",
+      "capacidade": "150.00",
+      "unidade_medida": "Centímetros",
+      "valor_bem": "1300.00",
+      "situacao": "Ativo",
+      "tipo": "Cortina Frontal",
+      "modelo": "AS-150C",
+      "categoria": 7,
+      "marca": 7,
+      "local": 31
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 57,
+    "fields": {
+      "patrimonio": "EQ-2026-057",
+      "capacidade": "150.00",
+      "unidade_medida": "Centímetros",
+      "valor_bem": "1300.00",
+      "situacao": "Ativo",
+      "tipo": "Cortina Frontal",
+      "modelo": "AS-150C",
+      "categoria": 7,
+      "marca": 7,
+      "local": 31
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 58,
+    "fields": {
+      "patrimonio": "EQ-2026-058",
+      "capacidade": "30000.00",
+      "unidade_medida": "BTUs por hora",
+      "valor_bem": "28500.00",
+      "situacao": "Ativo",
+      "tipo": "Unidade Condensadora Frigorífica",
+      "modelo": "CF-30IND",
+      "categoria": 4,
+      "marca": 3,
+      "local": 33
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 59,
+    "fields": {
+      "patrimonio": "EQ-2026-059",
+      "capacidade": "18000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "3350.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-18INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 34
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 60,
+    "fields": {
+      "patrimonio": "EQ-2026-060",
+      "capacidade": "18000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "3350.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-18INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 34
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 61,
+    "fields": {
+      "patrimonio": "EQ-2026-061",
+      "capacidade": "2.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1420.00",
+      "situacao": "Ativo",
+      "tipo": "Purificador Eletrônico",
+      "modelo": "PA-FLEX-02",
+      "categoria": 5,
+      "marca": 5,
+      "local": 34
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 62,
+    "fields": {
+      "patrimonio": "EQ-2026-062",
+      "capacidade": "2.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1420.00",
+      "situacao": "Ativo",
+      "tipo": "Purificador Eletrônico",
+      "modelo": "PA-FLEX-02",
+      "categoria": 5,
+      "marca": 5,
+      "local": 35
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 63,
+    "fields": {
+      "patrimonio": "EQ-2026-063",
+      "capacidade": "24000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "4390.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-24INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 36
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 64,
+    "fields": {
+      "patrimonio": "EQ-2026-064",
+      "capacidade": "24000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "4390.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-24INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 36
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 65,
+    "fields": {
+      "patrimonio": "EQ-2026-065",
+      "capacidade": "35000.00",
+      "unidade_medida": "BTUs por hora",
+      "valor_bem": "51200.00",
+      "situacao": "Ativo",
+      "tipo": "Precisão InRow",
+      "modelo": "PREC-DATA-35",
+      "categoria": 4,
+      "marca": 4,
+      "local": 37
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 66,
+    "fields": {
+      "patrimonio": "EQ-2026-066",
+      "capacidade": "24000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "4150.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-24INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 38
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 67,
+    "fields": {
+      "patrimonio": "EQ-2026-067",
+      "capacidade": "24000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "4150.00",
+      "situacao": "Ativo",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-24INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 38
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 68,
+    "fields": {
+      "patrimonio": "EQ-2026-068",
+      "capacidade": "100.00",
+      "unidade_medida": "Litros",
+      "valor_bem": "1950.00",
+      "situacao": "Em Manutenção",
+      "tipo": "Coluna Industrial",
+      "modelo": "HM-IND100",
+      "categoria": 6,
+      "marca": 6,
+      "local": 32
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 69,
+    "fields": {
+      "patrimonio": "EQ-2026-069",
+      "capacidade": "18000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "3200.00",
+      "situacao": "Em Manutenção",
+      "tipo": "Split Inverter",
+      "modelo": "ACT-18INV",
+      "categoria": 1,
+      "marca": 1,
+      "local": 34
+    }
+  },
+  {
+    "model": "app_manutencao.equipamento",
+    "pk": 70,
+    "fields": {
+      "patrimonio": "EQ-2026-070",
+      "capacidade": "12000.00",
+      "unidade_medida": "BTUs",
+      "valor_bem": "1.00",
+      "situacao": "Baixado",
+      "tipo": "Janela Antigo",
+      "modelo": "LEG-J12",
+      "categoria": 1,
+      "marca": 2,
+      "local": 20
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 20,
+    "fields": {
+      "data": "2026-01-28",
+      "nota_fiscal": "NFS-e 13120 - Série 1",
+      "fornecedor": 8,
+      "solicitacao": 30101,
+      "finalizado": true,
+      "forma_aquisicao": "Contrato",
+      "tipo_manutencao": "Preventiva",
+      "observacoes": "Limpeza completa das serpentinas e filtros dos aparelhos do Restaurante Universitário."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 21,
+    "fields": {
+      "data": "2026-02-18",
+      "nota_fiscal": "DANFE 21500 - Série A",
+      "fornecedor": 9,
+      "solicitacao": 30102,
+      "finalizado": true,
+      "forma_aquisicao": "Processo",
+      "tipo_manutencao": "Material",
+      "observacoes": "Lote de torneiras de pressão, mangueiras trançadas e filtros purificadores de água."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 22,
+    "fields": {
+      "data": "2026-03-24",
+      "nota_fiscal": "NFS-e 13450 - Série 1",
+      "fornecedor": 10,
+      "solicitacao": 30103,
+      "finalizado": true,
+      "forma_aquisicao": "Adiantamento",
+      "tipo_manutencao": "Corretiva",
+      "observacoes": "Substituição do motor de acionamento das lâminas na cortina de ar do refeitório."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 23,
+    "fields": {
+      "data": "2026-04-14",
+      "nota_fiscal": "NFS-e 13780 - Série 1",
+      "fornecedor": 8,
+      "solicitacao": 30104,
+      "finalizado": true,
+      "forma_aquisicao": "Contrato",
+      "tipo_manutencao": "Preventiva",
+      "observacoes": "Manutenção periódica nas instalações do Alojamento Estudantil."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 24,
+    "fields": {
+      "data": "2026-05-18",
+      "nota_fiscal": "DANFE 22340 - Série B",
+      "fornecedor": 8,
+      "solicitacao": 30105,
+      "finalizado": true,
+      "forma_aquisicao": "Processo",
+      "tipo_manutencao": "Material e Serviço",
+      "observacoes": "Recarga de gás R-410A e eliminação de vibração em suporte metálico."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 25,
+    "fields": {
+      "data": "2026-06-20",
+      "nota_fiscal": "NFS-e 14010 - Série 1",
+      "fornecedor": 9,
+      "solicitacao": 30106,
+      "finalizado": true,
+      "forma_aquisicao": "Adiantamento",
+      "tipo_manutencao": "Serviço",
+      "observacoes": "Higienização interna com ozônio e desinfecção de reservatórios de água."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 26,
+    "fields": {
+      "data": "2026-07-22",
+      "nota_fiscal": "NFS-e 14290 - Série 1",
+      "fornecedor": 10,
+      "solicitacao": 30107,
+      "finalizado": true,
+      "forma_aquisicao": "Contrato",
+      "tipo_manutencao": "Preventiva",
+      "observacoes": "Aferição de corrente, alinhamento dos eixos e limpeza de grades de retorno."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 27,
+    "fields": {
+      "data": "2026-08-11",
+      "nota_fiscal": "NFS-e 14500 - Série 1",
+      "fornecedor": 8,
+      "solicitacao": 30108,
+      "finalizado": true,
+      "forma_aquisicao": "Processo",
+      "tipo_manutencao": "Corretiva",
+      "observacoes": "Substituição do ventilador centrífugo da câmara fria de alimentos."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 28,
+    "fields": {
+      "data": "2026-09-08",
+      "nota_fiscal": "DANFE 23400 - Série A",
+      "fornecedor": 9,
+      "solicitacao": 30109,
+      "finalizado": false,
+      "forma_aquisicao": "Adiantamento",
+      "tipo_manutencao": "Material e Serviço",
+      "observacoes": "Troca de compressor 1/4 HP do bebedouro industrial em andamento."
+    }
+  },
+  {
+    "model": "app_manutencao.manutencao",
+    "pk": 29,
+    "fields": {
+      "data": "2026-09-21",
+      "nota_fiscal": "NFS-e 14810 - Série 1",
+      "fornecedor": 8,
+      "solicitacao": 30110,
+      "finalizado": false,
+      "forma_aquisicao": "Processo",
+      "tipo_manutencao": "Corretiva",
+      "observacoes": "Aparelho do alojamento apresentando ruído na turbina interna."
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 42,
+    "fields": {
+      "equipamento": 51,
+      "manutencao": 20,
+      "descricao": "Higienização bacteriológica da serpentina e lavagem de filtros",
+      "quantidade": "1.00",
+      "valor_unitario": "220.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 43,
+    "fields": {
+      "equipamento": 52,
+      "manutencao": 20,
+      "descricao": "Higienização bacteriológica da serpentina e lavagem de filtros",
+      "quantidade": "1.00",
+      "valor_unitario": "220.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 44,
+    "fields": {
+      "equipamento": 53,
+      "manutencao": 20,
+      "descricao": "Higienização bacteriológica da serpentina e lavagem de filtros",
+      "quantidade": "1.00",
+      "valor_unitario": "220.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 45,
+    "fields": {
+      "equipamento": 54,
+      "manutencao": 21,
+      "descricao": "Kit de mangueiras atóxicas em silicone alimentício",
+      "quantidade": "2.00",
+      "valor_unitario": "65.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 46,
+    "fields": {
+      "equipamento": 55,
+      "manutencao": 21,
+      "descricao": "Conjunto de torneiras copo e jato em aço inoxidável",
+      "quantidade": "3.00",
+      "valor_unitario": "110.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 47,
+    "fields": {
+      "equipamento": 61,
+      "manutencao": 21,
+      "descricao": "Refil purificador de água com tripla retenção bacteriológica",
+      "quantidade": "1.00",
+      "valor_unitario": "155.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 48,
+    "fields": {
+      "equipamento": 62,
+      "manutencao": 21,
+      "descricao": "Refil purificador de água com tripla retenção bacteriológica",
+      "quantidade": "1.00",
+      "valor_unitario": "155.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 49,
+    "fields": {
+      "equipamento": 56,
+      "manutencao": 22,
+      "descricao": "Motor elétrico blindado de indução monofásico 1/3 HP",
+      "quantidade": "1.00",
+      "valor_unitario": "580.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 50,
+    "fields": {
+      "equipamento": 56,
+      "manutencao": 22,
+      "descricao": "Mão de obra para desmontagem, alinhamento e balanceamento",
+      "quantidade": "1.00",
+      "valor_unitario": "290.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 51,
+    "fields": {
+      "equipamento": 59,
+      "manutencao": 23,
+      "descricao": "Limpeza da carcaça frontal e desinfecção de dreno",
+      "quantidade": "1.00",
+      "valor_unitario": "170.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 52,
+    "fields": {
+      "equipamento": 60,
+      "manutencao": 23,
+      "descricao": "Limpeza da carcaça frontal e desinfecção de dreno",
+      "quantidade": "1.00",
+      "valor_unitario": "170.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 53,
+    "fields": {
+      "equipamento": 63,
+      "manutencao": 24,
+      "descricao": "Carga parcial de fluido refrigerante ecológico R-410A (kg)",
+      "quantidade": "2.20",
+      "valor_unitario": "115.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 54,
+    "fields": {
+      "equipamento": 63,
+      "manutencao": 24,
+      "descricao": "Coxins antivibratórios de borracha vulcanizada",
+      "quantidade": "4.00",
+      "valor_unitario": "35.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 55,
+    "fields": {
+      "equipamento": 54,
+      "manutencao": 25,
+      "descricao": "Sanitização interna de reservatório com pastilha bactericida",
+      "quantidade": "1.00",
+      "valor_unitario": "130.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 56,
+    "fields": {
+      "equipamento": 55,
+      "manutencao": 25,
+      "descricao": "Sanitização interna de reservatório com pastilha bactericida",
+      "quantidade": "1.00",
+      "valor_unitario": "130.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 57,
+    "fields": {
+      "equipamento": 57,
+      "manutencao": 26,
+      "descricao": "Inspeção geral, lubrificação de buchas e teste de chave seletora",
+      "quantidade": "1.00",
+      "valor_unitario": "160.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 58,
+    "fields": {
+      "equipamento": 58,
+      "manutencao": 27,
+      "descricao": "Microventilador axial eletrônico de alto rendimento",
+      "quantidade": "1.00",
+      "valor_unitario": "740.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 59,
+    "fields": {
+      "equipamento": 58,
+      "manutencao": 27,
+      "descricao": "Mão de obra de substituição em câmara fria e parametrização",
+      "quantidade": "1.00",
+      "valor_unitario": "380.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 60,
+    "fields": {
+      "equipamento": 68,
+      "manutencao": 28,
+      "descricao": "Compressor hermético 1/4 HP gás ecológico R-134a",
+      "quantidade": "1.00",
+      "valor_unitario": "590.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 61,
+    "fields": {
+      "equipamento": 68,
+      "manutencao": 28,
+      "descricao": "Filtro secador com sílica dessecante e solda fosfoper",
+      "quantidade": "1.00",
+      "valor_unitario": "85.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 62,
+    "fields": {
+      "equipamento": 69,
+      "manutencao": 29,
+      "descricao": "Turbina tangencial da unidade interna evaporadora",
+      "quantidade": "1.00",
+      "valor_unitario": "310.00"
+    }
+  },
+  {
+    "model": "app_manutencao.itemmanutencao",
+    "pk": 63,
+    "fields": {
+      "equipamento": 69,
+      "manutencao": 29,
+      "descricao": "Mancal com rolamento blindado para eixo de turbina",
+      "quantidade": "1.00",
+      "valor_unitario": "95.00"
+    }
+  }
+]
