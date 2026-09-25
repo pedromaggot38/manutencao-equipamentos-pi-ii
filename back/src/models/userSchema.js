@@ -23,7 +23,11 @@ const passwordConfirmationFields = Type.Object({
 
 const userBaseFields = Type.Object({
   name: Type.String({ minLength: 3 }),
-  username: Type.String({ minLength: 3, maxLength: 20 }),
+  username: Type.String({
+    minLength: 3,
+    maxLength: 20,
+    pattern: '^[a-zA-Z0-9_]+$',
+  }),
   email: Type.String({ format: 'email' }),
   password: Type.String({ minLength: 4 }),
   avatar: Type.Optional(

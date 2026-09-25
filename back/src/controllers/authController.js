@@ -76,11 +76,21 @@ export const signup = async (request, reply) => {
     throw new AppError('As senhas não coincidem.', 400);
   }
 
+  const normalizedUsername = normalizeInput(username);
+  const usernameRegex = /^[a-zA-Z0-9_]+$/;
+
+  if (!usernameRegex.test(normalizedUsername)) {
+    throw new AppError(
+      'O nome de usuário não pode conter espaços, acentos ou caracteres especiais. Use apenas letras, números e sublinhado (_).',
+      400,
+    );
+  }
+
   const userData = {
     ...rest,
     password,
     name: sanitizeString(name),
-    username: normalizeInput(username),
+    username: normalizedUsername,
     email: normalizeInput(email),
   };
 

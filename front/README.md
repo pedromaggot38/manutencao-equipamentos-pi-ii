@@ -8,7 +8,7 @@ Front-end desenvolvido para o sistema de gestão de equipamentos, manutenções 
 
 Este projeto foi construído utilizando as seguintes tecnologias e bibliotecas:
 
-- **[React 18](https://react.dev/)** - Biblioteca JavaScript para construção de interfaces de utilizador baseadas em componentes.
+- **[React 18](https://react.dev/)** - Biblioteca JavaScript para construção de interfaces de usuário baseadas em componentes.
 - **[Vite](https://vitejs.dev/)** - Ferramenta de build frontend rápida e moderna.
 - **[React Router DOM](https://reactrouter.com/)** - Gerenciamento de rotas e navegação protegida.
 - **[TanStack React Query](https://tanstack.com/query)** - Gerenciamento de estado assíncrono, cache inteligente e sincronização de dados com a API.
@@ -19,10 +19,10 @@ Este projeto foi construído utilizando as seguintes tecnologias e bibliotecas:
 ## ✨ Funcionalidades Principais
 
 - **Autenticação & Sessão**: Login seguro, proteção de rotas privadas e configuração inicial (Setup Root) para primeiro acesso.
-- **Gestão de Utilizadores (`/usuarios`)**:
+- **Gestão de Usuários (`/usuarios`)**:
   - Listagem paginada (10 itens por padrão) com suporte a filtros dinâmicos por cargo (`role`) e status (`status`), além de barra de pesquisa integrada.
-  - Hierarquia de permissões (`root` gerencia todos; `admin` gerencia utilizadores básicos).
-  - Modal de edição avançada permitindo alterar dados cadastrais, cargo e status do utilizador de forma dinâmica.
+  - Hierarquia de permissões (`root` gerencia todos; `admin` gerencia usuários básicos).
+  - Modal de edição avançada permitindo alterar dados cadastrais, cargo e status do usuário de forma dinâmica.
 - **Gestão de Perfil (`/perfil`)**:
   - Edição de dados pessoais e alteração de palavra-passe.
   - Aba de verificação de e-mail via código OTP e fluxo de desativação segura da própria conta exigindo a palavra-passe atual.

@@ -92,11 +92,11 @@ export default function Usuarios() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
-      toast.success('Utilizador atualizado com sucesso.');
+      toast.success('Usuário atualizado com sucesso.');
       fecharModalEdicao();
     },
     onError: (err) => {
-      toast.error(err.message || 'Não foi possível atualizar o utilizador.');
+      toast.error(err.message || 'Não foi possível atualizar o usuário.');
     },
   });
 
@@ -106,11 +106,11 @@ export default function Usuarios() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
-      toast.success('Utilizador removido permanentemente.');
+      toast.success('Usuário removido permanentemente.');
       fecharModalRemover();
     },
     onError: (err) => {
-      toast.error(err.message || 'Não foi possível remover o utilizador.');
+      toast.error(err.message || 'Não foi possível remover o usuário.');
       fecharModalRemover();
     },
   });
@@ -184,7 +184,7 @@ export default function Usuarios() {
   const labelDinamicoStatus = usuarioAlvo?.isVerified ? 'Ativo' : 'Pendente';
 
   return (
-    <Layout title='Utilizadores'>
+    <Layout title='Usuários'>
       <form
         className='toolbar'
         onSubmit={buscar}
@@ -271,13 +271,13 @@ export default function Usuarios() {
 
       <div className='panel'>
         <div className='panel-header'>
-          <h2>{meta?.total ?? items.length} utilizador(es)</h2>
+          <h2>{meta?.total ?? items.length} usuário(s)</h2>
         </div>
 
         {loading && <div className='empty-state'>A carregar…</div>}
         {!loading && error && <div className='empty-state'>{error}</div>}
         {!loading && !error && items.length === 0 && (
-          <div className='empty-state'>Nenhum utilizador encontrado.</div>
+          <div className='empty-state'>Nenhum usuário encontrado.</div>
         )}
 
         {!loading && !error && items.length > 0 && (
@@ -285,7 +285,7 @@ export default function Usuarios() {
             <thead>
               <tr>
                 <th>Nome</th>
-                <th>Utilizador</th>
+                <th>Usuário</th>
                 <th>E-mail</th>
                 <th>Cargo</th>
                 <th>Status</th>
@@ -381,10 +381,10 @@ export default function Usuarios() {
         <Modal
           isOpen={modalRemoverAberto}
           onClose={fecharModalRemover}
-          title='Excluir utilizador'
+          title='Excluir usuário'
         >
           <p style={{ marginBottom: 20, color: 'var(--text-main, #333)' }}>
-            Tem certeza de que deseja remover permanentemente o utilizador{' '}
+            Tem certeza de que deseja remover permanentemente o usuário{' '}
             {usuarioAlvo?.name}? Esta ação não pode ser desfeita.
           </p>
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10 }}>
@@ -408,7 +408,7 @@ export default function Usuarios() {
         <Modal
           isOpen={modalEdicaoAberto}
           onClose={fecharModalEdicao}
-          title={`Editar utilizador: ${usuarioAlvo?.name}`}
+          title={`Editar usuário: ${usuarioAlvo?.name}`}
         >
           <form onSubmit={handleSubmitEdicao}>
             <div className='field' style={{ marginBottom: 14 }}>
@@ -429,7 +429,7 @@ export default function Usuarios() {
               style={{ display: 'flex', gap: 12, marginBottom: 14 }}
             >
               <div className='field' style={{ flex: 1 }}>
-                <label htmlFor='edit-username'>Nome de utilizador</label>
+                <label htmlFor='edit-username'>Nome de usuário</label>
                 <input
                   id='edit-username'
                   type='text'

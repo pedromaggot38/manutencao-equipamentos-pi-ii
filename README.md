@@ -1,6 +1,6 @@
 # 📚 Projeto Integrador II - UNIVESP
 
-Repositório oficial do Projeto Integrador II da **Universidade Virtual do Estado de São Paulo (UNIVESP)**. O sistema consiste em uma aplicação web voltada para a gestão de equipamentos, manutenções e controle de utilizadores, dividida entre uma API de back-end e uma interface de front-end.
+Repositório oficial do Projeto Integrador II da **Universidade Virtual do Estado de São Paulo (UNIVESP)**. O sistema consiste em uma aplicação web voltada para a gestão de equipamentos, manutenções e controle de usuários, dividida entre uma API de back-end e uma interface de front-end.
 
 ---
 

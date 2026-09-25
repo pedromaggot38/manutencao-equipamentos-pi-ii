@@ -154,18 +154,27 @@ Gerencia as informações da própria conta. Requer autenticação (`protect`).
 
 Módulo administrativo. Requer autenticação e nível hierárquico elevado (`root` ou `admin`).
 
-| Rota                       |  Método  | Descrição                                                      |    Restrição    |
-| :------------------------- | :------: | :------------------------------------------------------------- | :-------------: |
-| `/`                        |  `GET`   | Lista todos os usuários cadastrados de forma paginada.         | `admin`, `root` |
-| `/`                        |  `POST`  | Cria um usuário ativando e definindo seu cargo diretamente.    | `admin`, `root` |
-| `/{identifier}`            |  `GET`   | Busca detalhes de um usuário por ID, E-mail ou Username.       | `admin`, `root` |
-| `/{identifier}`            | `PATCH`  | Atualiza dados e cargos de terceiros (respeitando hierarquia). | `admin`, `root` |
-| `/{identifier}`            | `DELETE` | Remove permanentemente um usuário do banco de dados.           |  `root` apenas  |
-| `/{identifier}/deactivate` | `PATCH`  | Desativa administrativamente a conta de um terceiro.           | `admin`, `root` |
+| Rota            |  Método  | Descrição                                                      |    Restrição    |
+| :-------------- | :------: | :------------------------------------------------------------- | :-------------: |
+| `/`             |  `GET`   | Lista todos os usuários cadastrados de forma paginada.         | `admin`, `root` |
+| `/`             |  `POST`  | Cria um usuário ativando e definindo seu cargo diretamente.    | `admin`, `root` |
+| `/{identifier}` |  `GET`   | Busca detalhes de um usuário por ID, E-mail ou Username.       | `admin`, `root` |
+| `/{identifier}` | `PATCH`  | Atualiza dados e cargos de terceiros (respeitando hierarquia). | `admin`, `root` |
+| `/{identifier}` | `DELETE` | Remove permanentemente um usuário do banco de dados.           |  `root` apenas  |
 
 ---
 
-### 💻 4. Equipamentos (`/api/v1/equipamentos`)
+### 📊 4. Dashboard e Indicadores (`/api/v1/dashboard`)
+
+Agregação e consolidação de métricas essenciais para visão analítica e relatórios rápidos. Requer autenticação.
+
+| Rota       | Método | Descrição                                                                           | Restrição |
+| :--------- | :----: | :---------------------------------------------------------------------------------- | :-------: |
+| `/summary` | `GET`  | Retorna totais consolidados (equipamentos, manutenções, prédios, fornecedores, etc) |  Logado   |
+
+---
+
+### 💻 5. Equipamentos (`/api/v1/equipamentos`)
 
 Gestão de inventário e máquinas. Requer autenticação.
 
@@ -179,7 +188,7 @@ Gestão de inventário e máquinas. Requer autenticação.
 
 ---
 
-### 🔧 5. Manutenções (`/api/v1/manutencoes`)
+### 🔧 6. Manutenções (`/api/v1/manutencoes`)
 
 Gestão de ordens de serviço utilizando padrão Master-Detail. Requer autenticação.
 
@@ -196,7 +205,7 @@ Gestão de ordens de serviço utilizando padrão Master-Detail. Requer autentica
 
 ---
 
-### 🏢 6. Tabelas Auxiliares (`/api/v1/...`)
+### 🏢 7. Tabelas Auxiliares (`/api/v1/...`)
 
 Gestão das entidades de apoio (Prédios, Locais, Fornecedores, etc). Todas exigem usuário logado para leitura, criação e edição.
 
