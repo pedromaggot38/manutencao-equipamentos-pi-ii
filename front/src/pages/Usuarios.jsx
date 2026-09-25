@@ -27,6 +27,16 @@ const ROLE_BADGE_CLASS = {
   user: 'badge-role-user',
 };
 
+const FORM_NOVO_PADRAO = {
+  name: '',
+  username: '',
+  email: '',
+  phone: '',
+  role: 'user',
+  password: '',
+  passwordConfirm: '',
+};
+
 const LIMIT = 10;
 
 async function fetchUsuarios(page, search, role, status) {
@@ -44,13 +54,15 @@ export default function Usuarios() {
   const queryClient = useQueryClient();
   const toast = useToast();
 
+  const podeCriarUsuario =
+    usuarioLogado?.role === 'admin' || usuarioLogado?.role === 'root';
+
   const [page, setPage] = useState(1);
   const [termoDigitado, setTermoDigitado] = useState('');
   const [buscaAplicada, setBuscaAplicada] = useState('');
   const [filtroRole, setFiltroRole] = useState('');
   const [filtroStatus, setFiltroStatus] = useState('');
 
-  // O botão só aparece se houver uma busca aplicada ou se os selects de filtro estiverem selecionados
   const temFiltroAtivo =
     buscaAplicada !== '' || filtroRole !== '' || filtroStatus !== '';
 
@@ -66,6 +78,10 @@ export default function Usuarios() {
     role: 'user',
     status: 'active',
   });
+
+  // Estado do Modal de Criação
+  const [modalCriacaoAberto, setModalCriacaoAberto] = useState(false);
+  const [formCriacao, setFormCriacao] = useState(FORM_NOVO_PADRAO);
 
   const {
     data: respostaUsuarios,
@@ -86,6 +102,24 @@ export default function Usuarios() {
   const meta = respostaUsuarios?.meta ?? null;
   const error = erroQuery?.message || '';
 
+  const criarMutation = useMutation({
+    mutationFn: async (dados) => {
+      return await api.post('/users', dados);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+      toast.success('Usuário criado com sucesso.');
+      fecharModalCriacao();
+    },
+    onError: (err) => {
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        'Não foi possível criar o usuário.';
+      toast.error(msg);
+    },
+  });
+
   const atualizarMutation = useMutation({
     mutationFn: async ({ id, dados }) => {
       return await api.patch(`/users/${id}`, dados);
@@ -96,7 +130,11 @@ export default function Usuarios() {
       fecharModalEdicao();
     },
     onError: (err) => {
-      toast.error(err.message || 'Não foi possível atualizar o usuário.');
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        'Não foi possível atualizar o usuário.';
+      toast.error(msg);
     },
   });
 
@@ -110,7 +148,11 @@ export default function Usuarios() {
       fecharModalRemover();
     },
     onError: (err) => {
-      toast.error(err.message || 'Não foi possível remover o usuário.');
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        'Não foi possível remover o usuário.';
+      toast.error(msg);
       fecharModalRemover();
     },
   });
@@ -139,6 +181,42 @@ export default function Usuarios() {
     if (usuarioLogado.role === 'root') return true;
     if (usuarioLogado.role === 'admin') return alvo.role === 'user';
     return false;
+  }
+
+  function abrirModalCriar() {
+    setFormCriacao({
+      ...FORM_NOVO_PADRAO,
+      role: 'user', // padrão seguro
+    });
+    setModalCriacaoAberto(true);
+  }
+
+  function fecharModalCriacao() {
+    setModalCriacaoAberto(false);
+    setFormCriacao(FORM_NOVO_PADRAO);
+  }
+
+  function handleSubmitCriacao(e) {
+    e.preventDefault();
+    if (formCriacao.password !== formCriacao.passwordConfirm) {
+      toast.error('As senhas não coincidem.');
+      return;
+    }
+
+    const payload = {
+      name: formCriacao.name.trim(),
+      username: formCriacao.username.trim(),
+      email: formCriacao.email.trim(),
+      role: usuarioLogado?.role === 'root' ? formCriacao.role : 'user',
+      password: formCriacao.password,
+      passwordConfirm: formCriacao.passwordConfirm,
+    };
+
+    if (formCriacao.phone?.trim()) {
+      payload.phone = formCriacao.phone.trim();
+    }
+
+    criarMutation.mutate(payload);
   }
 
   function abrirModalRemover(item) {
@@ -184,7 +262,16 @@ export default function Usuarios() {
   const labelDinamicoStatus = usuarioAlvo?.isVerified ? 'Ativo' : 'Pendente';
 
   return (
-    <Layout title='Usuários'>
+    <Layout
+      title='Usuários'
+      actions={
+        podeCriarUsuario && (
+          <button className='btn btn-primary' onClick={abrirModalCriar}>
+            + Novo usuário
+          </button>
+        )
+      }
+    >
       <form
         className='toolbar'
         onSubmit={buscar}
@@ -255,7 +342,6 @@ export default function Usuarios() {
           Filtrar
         </button>
 
-        {/* O botão aparece apenas quando uma busca ou filtro foi efetivamente aplicado */}
         {temFiltroAtivo && (
           <button
             type='button'
@@ -375,6 +461,150 @@ export default function Usuarios() {
           </div>
         )}
       </div>
+
+      {/* Modal de Criação de Novo Usuário */}
+      {modalCriacaoAberto && (
+        <Modal
+          isOpen={modalCriacaoAberto}
+          onClose={fecharModalCriacao}
+          title='Novo usuário'
+        >
+          <form onSubmit={handleSubmitCriacao}>
+            <div className='field' style={{ marginBottom: 14 }}>
+              <label htmlFor='create-name'>Nome completo</label>
+              <input
+                id='create-name'
+                type='text'
+                value={formCriacao.name}
+                onChange={(e) =>
+                  setFormCriacao({ ...formCriacao, name: e.target.value })
+                }
+                required
+              />
+            </div>
+
+            <div
+              className='field-row'
+              style={{ display: 'flex', gap: 12, marginBottom: 14 }}
+            >
+              <div className='field' style={{ flex: 1 }}>
+                <label htmlFor='create-username'>Nome de usuário</label>
+                <input
+                  id='create-username'
+                  type='text'
+                  className='mono'
+                  value={formCriacao.username}
+                  onChange={(e) =>
+                    setFormCriacao({ ...formCriacao, username: e.target.value })
+                  }
+                  required
+                />
+              </div>
+
+              <div className='field' style={{ flex: 1 }}>
+                <label htmlFor='create-phone'>Telefone (opcional)</label>
+                <input
+                  id='create-phone'
+                  type='text'
+                  value={formCriacao.phone}
+                  onChange={(e) =>
+                    setFormCriacao({ ...formCriacao, phone: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+
+            <div className='field' style={{ marginBottom: 14 }}>
+              <label htmlFor='create-email'>E-mail</label>
+              <input
+                id='create-email'
+                type='email'
+                className='mono'
+                value={formCriacao.email}
+                onChange={(e) =>
+                  setFormCriacao({ ...formCriacao, email: e.target.value })
+                }
+                required
+              />
+            </div>
+
+            {/* Cargo: se for root, escolhe entre 'user' e 'admin'. Se for admin, bloqueado em 'user' */}
+            <div className='field' style={{ marginBottom: 14 }}>
+              <label htmlFor='create-role'>Cargo</label>
+              {usuarioLogado?.role === 'root' ? (
+                <select
+                  id='create-role'
+                  value={formCriacao.role}
+                  onChange={(e) =>
+                    setFormCriacao({ ...formCriacao, role: e.target.value })
+                  }
+                >
+                  <option value='user'>User</option>
+                  <option value='admin'>Admin</option>
+                </select>
+              ) : (
+                <select id='create-role' value='user' disabled>
+                  <option value='user'>User</option>
+                </select>
+              )}
+            </div>
+
+            <div
+              className='field-row'
+              style={{ display: 'flex', gap: 12, marginBottom: 20 }}
+            >
+              <div className='field' style={{ flex: 1 }}>
+                <label htmlFor='create-password'>Senha</label>
+                <input
+                  id='create-password'
+                  type='password'
+                  value={formCriacao.password}
+                  onChange={(e) =>
+                    setFormCriacao({ ...formCriacao, password: e.target.value })
+                  }
+                  required
+                />
+              </div>
+
+              <div className='field' style={{ flex: 1 }}>
+                <label htmlFor='create-password-confirm'>Confirmar senha</label>
+                <input
+                  id='create-password-confirm'
+                  type='password'
+                  value={formCriacao.passwordConfirm}
+                  onChange={(e) =>
+                    setFormCriacao({
+                      ...formCriacao,
+                      passwordConfirm: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </div>
+            </div>
+
+            <div
+              style={{ display: 'flex', justifyContent: 'flex-end', gap: 10 }}
+            >
+              <button
+                type='button'
+                className='btn'
+                onClick={fecharModalCriacao}
+                disabled={criarMutation.isPending}
+              >
+                Cancelar
+              </button>
+              <button
+                type='submit'
+                className='btn btn-primary'
+                disabled={criarMutation.isPending}
+              >
+                {criarMutation.isPending ? 'Criando…' : 'Criar usuário'}
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
 
       {/* Modal de Exclusão */}
       {modalRemoverAberto && (
