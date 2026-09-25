@@ -192,16 +192,17 @@ Gestão de inventário e máquinas. Requer autenticação.
 
 Gestão de ordens de serviço utilizando padrão Master-Detail. Requer autenticação.
 
-| Rota              |  Método  | Descrição                                                |    Restrição    |
-| :---------------- | :------: | :------------------------------------------------------- | :-------------: |
-| `/`               |  `GET`   | Lista as capas das manutenções (sem os itens aninhados). |     Logado      |
-| `/`               |  `POST`  | Cria uma manutenção (permite envio de itens no array).   |     Logado      |
-| `/{id}`           |  `GET`   | Busca a capa detalhada de uma manutenção específica.     |     Logado      |
-| `/{id}`           | `PATCH`  | Atualiza as informações da capa da manutenção.           |     Logado      |
-| `/{id}`           | `DELETE` | Remove a manutenção e seus itens em cascata.             | `admin`, `root` |
-| `/{id}/itens`     |  `GET`   | Lista de forma paginada os itens/serviços da manutenção. |     Logado      |
-| `/{id}/itens`     |  `POST`  | Adiciona um item avulso a uma manutenção existente.      |     Logado      |
-| `/itens/{itemId}` | `DELETE` | Remove um item/serviço específico.                       | `admin`, `root` |
+| Rota                   |  Método  | Descrição                                                       |    Restrição    |
+| :--------------------- | :------: | :-------------------------------------------------------------- | :-------------: |
+| `/`                    |  `GET`   | Lista as capas das manutenções (com paginação e filtros).       |     Logado      |
+| `/`                    |  `POST`  | Cria uma manutenção (permite envio de itens no array).          |     Logado      |
+| `/{id}`                |  `GET`   | Busca a capa detalhada de uma manutenção específica.            |     Logado      |
+| `/{id}`                | `PATCH`  | Atualiza as informações da capa da manutenção.                  |     Logado      |
+| `/{id}`                | `DELETE` | Remove a manutenção e seus itens em cascata.                    | `admin`, `root` |
+| `/{id}/itens`          |  `GET`   | Lista de forma paginada os itens/serviços da manutenção.        |     Logado      |
+| `/{id}/itens`          |  `POST`  | Adiciona um item avulso a uma manutenção existente.             |     Logado      |
+| `/{id}/itens/{itemId}` | `PATCH`  | Atualiza os dados de um item específico vinculado à manutenção. |     Logado      |
+| `/{id}/itens/{itemId}` | `DELETE` | Remove um item/serviço específico vinculado à manutenção.       | `admin`, `root` |
 
 ---
 

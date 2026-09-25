@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import Layout from './Layout';
-import Modal from './Modal';
+import Layout from '../components/Layout.jsx';
+import Modal from '../components/Modal.jsx';
 
 const LIMIT = 20;
 
@@ -34,7 +34,11 @@ export default function CrudPage({ config }) {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
 
-  // Limpa a pesquisa e volta para a página 1 sempre que o endpoint/rota mudar (ex: de /locais para /predios)
+  // Estados para o Modal de Exclusão
+  const [modalRemoverAberto, setModalRemoverAberto] = useState(false);
+  const [itemAlvo, setItemAlvo] = useState(null);
+
+  // Limpa a pesquisa e volta para a página 1 sempre que o endpoint/rota mudar
   useEffect(() => {
     setPage(1);
     setTermoDigitado('');
@@ -56,6 +60,37 @@ export default function CrudPage({ config }) {
   const items = respostaCrud?.items ?? [];
   const meta = respostaCrud?.meta ?? null;
   const error = erroQuery?.message || '';
+
+  // Mutation de Exclusão
+  const excluirMutation = useMutation({
+    mutationFn: async (id) => {
+      return await api.delete(`${config.endpoint}/${id}`, {
+        headers: { 'Content-Type': undefined },
+      });
+    },
+    onSuccess: (res) => {
+      toast.success(res?.message || 'Registro excluído com sucesso!');
+      fecharModalRemover();
+
+      queryClient.invalidateQueries({
+        queryKey: ['crud-page', config.endpoint],
+      });
+      queryClient.invalidateQueries({ queryKey: ['auxiliares-locais'] });
+      queryClient.invalidateQueries({ queryKey: ['auxiliares-marcas'] });
+      queryClient.invalidateQueries({ queryKey: ['auxiliares-categorias'] });
+      queryClient.invalidateQueries({ queryKey: ['auxiliares-fornecedores'] });
+      queryClient.invalidateQueries({ queryKey: ['indicadores-rapidos'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard-summary'] });
+    },
+    onError: (err) => {
+      const mensagem =
+        err.response?.data?.message ||
+        err.message ||
+        'Não foi possível remover o registro.';
+      toast.error(mensagem);
+      fecharModalRemover();
+    },
+  });
 
   function irParaPagina(novaPagina) {
     setPage(novaPagina);
@@ -81,6 +116,36 @@ export default function CrudPage({ config }) {
   function abrirEdicao(item) {
     setFormError('');
     setModalItem({ ...item });
+  }
+
+  function abrirModalRemover(item) {
+    setItemAlvo(item);
+    setModalRemoverAberto(true);
+  }
+
+  function fecharModalRemover() {
+    setModalRemoverAberto(false);
+    setItemAlvo(null);
+  }
+
+  function confirmarRemocao() {
+    if (!itemAlvo) return;
+    excluirMutation.mutate(itemAlvo.id);
+  }
+
+  // Tenta obter o nome/identificador amigável do registro para o texto de confirmação
+  function getIdentificadorItem(item) {
+    if (!item) return '';
+    return (
+      item.nome ||
+      item.nome_categoria ||
+      item.marca ||
+      item.nome_local ||
+      item.nome_predio ||
+      item.razao_social ||
+      item.descricao ||
+      `#${item.id}`
+    );
   }
 
   async function salvar(e) {
@@ -122,36 +187,6 @@ export default function CrudPage({ config }) {
       toast.error(mensagem);
     } finally {
       setSaving(false);
-    }
-  }
-
-  async function excluir(item) {
-    if (
-      !window.confirm('Remover este registro? Essa ação não pode ser desfeita.')
-    )
-      return;
-    try {
-      const res = await api.delete(`${config.endpoint}/${item.id}`, {
-        headers: { 'Content-Type': undefined },
-      });
-
-      toast.success(res?.message || 'Registro excluído com sucesso!');
-
-      queryClient.invalidateQueries({
-        queryKey: ['crud-page', config.endpoint],
-      });
-      queryClient.invalidateQueries({ queryKey: ['auxiliares-locais'] });
-      queryClient.invalidateQueries({ queryKey: ['auxiliares-marcas'] });
-      queryClient.invalidateQueries({ queryKey: ['auxiliares-categorias'] });
-      queryClient.invalidateQueries({ queryKey: ['auxiliares-fornecedores'] });
-      queryClient.invalidateQueries({ queryKey: ['indicadores-rapidos'] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard-summary'] });
-    } catch (err) {
-      const mensagem =
-        err.response?.data?.message ||
-        err.message ||
-        'Não foi possível remover o registro.';
-      toast.error(mensagem);
     }
   }
 
@@ -238,7 +273,7 @@ export default function CrudPage({ config }) {
                       {podeExcluir && (
                         <button
                           className='btn btn-sm btn-danger'
-                          onClick={() => excluir(item)}
+                          onClick={() => abrirModalRemover(item)}
                         >
                           Excluir
                         </button>
@@ -277,6 +312,7 @@ export default function CrudPage({ config }) {
         )}
       </div>
 
+      {/* Modal de Criação / Edição */}
       {modalItem && (
         <Modal
           title={modalItem.id ? 'Editar registro' : 'Novo registro'}
@@ -337,6 +373,30 @@ export default function CrudPage({ config }) {
               </div>
             ))}
           </form>
+        </Modal>
+      )}
+
+      {/* Modal de Confirmação de Exclusão */}
+      {modalRemoverAberto && (
+        <Modal title='Excluir registro' onClose={fecharModalRemover}>
+          <p style={{ marginBottom: 20, color: 'var(--text-main, #333)' }}>
+            Tem certeza de que deseja remover o registro{' '}
+            <strong>"{getIdentificadorItem(itemAlvo)}"</strong>? Esta ação não
+            pode ser desfeita.
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10 }}>
+            <button type='button' className='btn' onClick={fecharModalRemover}>
+              Cancelar
+            </button>
+            <button
+              type='button'
+              className='btn btn-danger'
+              onClick={confirmarRemocao}
+              disabled={excluirMutation.isPending}
+            >
+              {excluirMutation.isPending ? 'A remover…' : 'Excluir'}
+            </button>
+          </div>
         </Modal>
       )}
     </Layout>

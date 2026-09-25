@@ -2,7 +2,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
-import CrudPage from './components/CrudPage';
 import { entidadesConfig } from './config/entidades';
 
 import Login from './pages/Login';
@@ -13,6 +12,8 @@ import Usuarios from './pages/Usuarios';
 import Perfil from './pages/Perfil';
 import NotFound from './pages/NotFound';
 import { ToastProvider } from './context/ToastContext.jsx';
+import ManutencaoDetalhes from './pages/ManutencaoDetalhes.jsx';
+import CrudPage from './pages/Crud.jsx';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -64,6 +65,15 @@ export default function App() {
                 element={
                   <ProtectedRoute>
                     <Manutencoes />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path='/manutencoes/:id'
+                element={
+                  <ProtectedRoute>
+                    <ManutencaoDetalhes />
                   </ProtectedRoute>
                 }
               />

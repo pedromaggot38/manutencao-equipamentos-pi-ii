@@ -5,6 +5,8 @@ import {
   updateManutencaoSchema,
   createItemManutencaoSchema,
   idParamSchema,
+  itemManutencaoParamsSchema,
+  updateItemManutencaoSchema,
 } from '../models/maintenanceSchema.js';
 
 export default async function manutencaoRoutes(fastify, options) {
@@ -53,10 +55,21 @@ export default async function manutencaoRoutes(fastify, options) {
     manutencaoController.addItem,
   );
 
-  fastify.delete(
-    '/itens/:id',
+  fastify.patch(
+    '/:id/itens/:itemId',
     {
-      schema: { params: idParamSchema },
+      schema: {
+        params: itemManutencaoParamsSchema,
+        body: updateItemManutencaoSchema,
+      },
+    },
+    manutencaoController.updateItem,
+  );
+
+  fastify.delete(
+    '/:id/itens/:itemId',
+    {
+      schema: { params: itemManutencaoParamsSchema },
       preHandler: [restrictTo('admin', 'root')],
     },
     manutencaoController.removeItem,

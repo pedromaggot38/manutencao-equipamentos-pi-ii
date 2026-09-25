@@ -95,9 +95,25 @@ export const addItem = async (request, reply) => {
   });
 };
 
+export const updateItem = async (request, reply) => {
+  const { id, itemId } = request.params;
+  const itemAtualizado = await manutencaoService.updateItemManutencao(
+    Number(id),
+    Number(itemId),
+    request.body,
+  );
+
+  return resfc({
+    reply,
+    code: 200,
+    data: itemAtualizado,
+    message: 'Item da manutenção atualizado com sucesso.',
+  });
+};
+
 export const removeItem = async (request, reply) => {
-  const { itemId } = request.params;
-  await manutencaoService.deleteItemManutencao(Number(itemId));
+  const { id, itemId } = request.params;
+  await manutencaoService.deleteItemManutencao(Number(id), Number(itemId));
 
   return resfc({
     reply,

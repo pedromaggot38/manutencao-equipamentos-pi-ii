@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
@@ -93,6 +93,10 @@ export default function Equipamentos() {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
 
+  // Estados para o Modal de Exclusão
+  const [modalRemoverAberto, setModalRemoverAberto] = useState(false);
+  const [equipamentoAlvo, setEquipamentoAlvo] = useState(null);
+
   // 1. Query da listagem de equipamentos (Cache de 30s)
   const {
     data: respostaEquipamentos,
@@ -150,6 +154,33 @@ export default function Equipamentos() {
     .map((s) => s.nome)
     .filter(Boolean);
 
+  // Mutation de Exclusão
+  const excluirMutation = useMutation({
+    mutationFn: async (id) => {
+      return await api.delete(`/equipamentos/${id}`, {
+        headers: { 'Content-Type': undefined },
+      });
+    },
+    onSuccess: (res) => {
+      toast.success(res?.message || 'Equipamento excluído com sucesso!');
+      fecharModalRemover();
+      queryClient.invalidateQueries({ queryKey: ['equipamentos'] });
+      queryClient.invalidateQueries({
+        queryKey: ['auxiliares-equipamentos-select'],
+      });
+      queryClient.invalidateQueries({ queryKey: ['dashboard-summary'] });
+      queryClient.invalidateQueries({ queryKey: ['indicadores-rapidos'] });
+    },
+    onError: (err) => {
+      const mensagem =
+        err.response?.data?.message ||
+        err.message ||
+        'Não foi possível remover o equipamento.';
+      toast.error(mensagem);
+      fecharModalRemover();
+    },
+  });
+
   function alterarFiltro(chave, valor) {
     setPage(1);
     setFiltros((atual) => ({ ...atual, [chave]: valor }));
@@ -180,6 +211,21 @@ export default function Equipamentos() {
   function abrirEdicao(item) {
     setFormError('');
     setModalItem({ ...item });
+  }
+
+  function abrirModalRemover(item) {
+    setEquipamentoAlvo(item);
+    setModalRemoverAberto(true);
+  }
+
+  function fecharModalRemover() {
+    setModalRemoverAberto(false);
+    setEquipamentoAlvo(null);
+  }
+
+  function confirmarRemocao() {
+    if (!equipamentoAlvo) return;
+    excluirMutation.mutate(equipamentoAlvo.id);
   }
 
   async function salvar(e) {
@@ -228,30 +274,6 @@ export default function Equipamentos() {
       toast.error(mensagem);
     } finally {
       setSaving(false);
-    }
-  }
-
-  async function excluir(item) {
-    if (!window.confirm(`Remover o equipamento ${item.patrimonio}?`)) return;
-    try {
-      const res = await api.delete(`/equipamentos/${item.id}`, {
-        headers: { 'Content-Type': undefined },
-      });
-
-      toast.success(res?.message || 'Equipamento excluído com sucesso!');
-
-      queryClient.invalidateQueries({ queryKey: ['equipamentos'] });
-      queryClient.invalidateQueries({
-        queryKey: ['auxiliares-equipamentos-select'],
-      });
-      queryClient.invalidateQueries({ queryKey: ['dashboard-summary'] });
-      queryClient.invalidateQueries({ queryKey: ['indicadores-rapidos'] });
-    } catch (err) {
-      const mensagem =
-        err.response?.data?.message ||
-        err.message ||
-        'Não foi possível remover o equipamento.';
-      toast.error(mensagem);
     }
   }
 
@@ -402,7 +424,7 @@ export default function Equipamentos() {
                       {podeExcluir && (
                         <button
                           className='btn btn-sm btn-danger'
-                          onClick={() => excluir(item)}
+                          onClick={() => abrirModalRemover(item)}
                         >
                           Excluir
                         </button>
@@ -441,6 +463,7 @@ export default function Equipamentos() {
         )}
       </div>
 
+      {/* Modal de Criação / Edição */}
       {modalItem && (
         <Modal
           title={modalItem.id ? 'Editar equipamento' : 'Novo equipamento'}
@@ -614,6 +637,31 @@ export default function Equipamentos() {
               </select>
             </div>
           </form>
+        </Modal>
+      )}
+
+      {/* Modal de Confirmação de Exclusão */}
+      {modalRemoverAberto && (
+        <Modal title='Excluir equipamento' onClose={fecharModalRemover}>
+          <p style={{ marginBottom: 20, color: 'var(--text-main, #333)' }}>
+            Tem certeza de que deseja remover permanentemente o equipamento{' '}
+            <strong>{equipamentoAlvo?.patrimonio}</strong>
+            {equipamentoAlvo?.modelo ? ` (${equipamentoAlvo.modelo})` : ''}?
+            Esta ação não pode ser desfeita.
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10 }}>
+            <button type='button' className='btn' onClick={fecharModalRemover}>
+              Cancelar
+            </button>
+            <button
+              type='button'
+              className='btn btn-danger'
+              onClick={confirmarRemocao}
+              disabled={excluirMutation.isPending}
+            >
+              {excluirMutation.isPending ? 'A remover…' : 'Excluir'}
+            </button>
+          </div>
         </Modal>
       )}
     </Layout>

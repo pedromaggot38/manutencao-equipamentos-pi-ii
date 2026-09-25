@@ -2,7 +2,6 @@ import db from '../config/db.js';
 import AppError from '../utils/appError.js';
 import { paginate } from '../utils/paginate.js';
 
-// 1. Listagem Paginada de Manutenções (Super Leve)
 export const listManutencoes = async (query = {}) => {
   const {
     page,
@@ -72,7 +71,6 @@ export const listManutencoes = async (query = {}) => {
   });
 };
 
-// 2. Buscar Manutenção Específica (Master)
 export const findManutencaoById = async (id) => {
   const manutencao = await db.manutencao.findUnique({
     where: { id: Number(id) },
@@ -91,7 +89,6 @@ export const findManutencaoById = async (id) => {
   return manutencao;
 };
 
-// 3. Buscar Itens de uma Manutenção (Detail Paginado)
 export const findItensByManutencaoId = async (manutencaoId, query = {}) => {
   const { page, limit, sortBy, sortOrder } = query;
 
@@ -128,7 +125,6 @@ export const findItensByManutencaoId = async (manutencaoId, query = {}) => {
   });
 };
 
-// 4. Criar Manutenção com itens vinculados
 export const createManutencao = async (dataPayload) => {
   const { itens, ...manutencaoData } = dataPayload;
 
@@ -164,7 +160,6 @@ export const createManutencao = async (dataPayload) => {
   });
 };
 
-// 5. Atualizar dados da Manutenção (Capa/Master)
 export const updateManutencao = async (id, dataPayload) => {
   await db.manutencao.findUniqueOrThrow({
     where: { id: Number(id) },
@@ -197,7 +192,6 @@ export const updateManutencao = async (id, dataPayload) => {
   });
 };
 
-// 6. Deletar Manutenção Completa (Cascade apagará os itens se configurado no DB)
 export const deleteManutencao = async (id) => {
   await db.manutencao.findUniqueOrThrow({
     where: { id: Number(id) },
@@ -210,7 +204,6 @@ export const deleteManutencao = async (id) => {
 
 // --- Operações Diretas de Itens de Manutenção ---
 
-// 7. Adicionar um item isolado a uma manutenção já existente
 export const addItemManutencao = async (manutencaoId, itemData) => {
   await db.manutencao.findUniqueOrThrow({
     where: { id: Number(manutencaoId) },
@@ -235,11 +228,63 @@ export const addItemManutencao = async (manutencaoId, itemData) => {
   });
 };
 
-// 8. Remover um item isolado
-export const deleteItemManutencao = async (itemId) => {
-  await db.itemManutencao.findUniqueOrThrow({
-    where: { id: Number(itemId) },
+export const updateItemManutencao = async (
+  manutencaoId,
+  itemId,
+  dataPayload,
+) => {
+  const itemExistente = await db.itemManutencao.findFirst({
+    where: {
+      id: Number(itemId),
+      manutencao_id: Number(manutencaoId),
+    },
   });
+
+  if (!itemExistente) {
+    throw new AppError(
+      'Item não encontrado para esta ordem de manutenção.',
+      404,
+    );
+  }
+
+  const updateData = {};
+  if (dataPayload.descricao !== undefined)
+    updateData.descricao = dataPayload.descricao;
+  if (dataPayload.quantidade !== undefined)
+    updateData.quantidade = parseFloat(dataPayload.quantidade);
+  if (dataPayload.valor_unitario !== undefined)
+    updateData.valor_unitario = parseFloat(dataPayload.valor_unitario);
+  if (dataPayload.equipamento_id !== undefined)
+    updateData.equipamento_id = Number(dataPayload.equipamento_id);
+
+  return await db.itemManutencao.update({
+    where: { id: Number(itemId) },
+    data: updateData,
+    include: {
+      equipamento: {
+        select: {
+          patrimonio: true,
+          modelo: true,
+        },
+      },
+    },
+  });
+};
+
+export const deleteItemManutencao = async (manutencaoId, itemId) => {
+  const itemExistente = await db.itemManutencao.findFirst({
+    where: {
+      id: Number(itemId),
+      manutencao_id: Number(manutencaoId),
+    },
+  });
+
+  if (!itemExistente) {
+    throw new AppError(
+      'Item não encontrado para esta ordem de manutenção.',
+      404,
+    );
+  }
 
   return await db.itemManutencao.delete({
     where: { id: Number(itemId) },

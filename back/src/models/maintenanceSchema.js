@@ -288,8 +288,13 @@ export const updateManutencaoSchema = Type.Partial(createManutencaoSchema, {
   ],
 });
 
-// --- Itens de Manutenção ---
+// Parâmetros da rota aninhada: /:id/itens/:itemId
+export const itemManutencaoParamsSchema = Type.Object({
+  id: Type.Integer({ minimum: 1 }),
+  itemId: Type.Integer({ minimum: 1 }),
+});
 
+// --- Itens de Manutenção
 export const createItemManutencaoSchema = Type.Object(
   {
     descricao: Type.String({ minLength: 2 }),

@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import Layout from '../components/Layout';
 import Modal from '../components/Modal';
+import { useNavigate } from 'react-router-dom';
 
 const ITEM_VAZIO = {
   descricao: '',
@@ -19,7 +20,6 @@ async function fetchManutencoes(page, search, dataInicio, dataFim) {
   const params = new URLSearchParams({ page, limit: LIMIT });
   if (search?.trim()) params.set('search', search.trim());
 
-  // Enviando nos parâmetros exatos esperados pelo back-end (snake_case)
   if (dataInicio) {
     params.set('data_inicio', `${dataInicio}T00:00:00.000Z`);
   }
@@ -43,6 +43,8 @@ async function fetchAuxiliar(endpoint) {
 }
 
 export default function Manutencoes() {
+  const navigate = useNavigate();
+
   const { user } = useAuth();
   const podeExcluir = user?.role === 'admin' || user?.role === 'root';
   const queryClient = useQueryClient();
@@ -54,7 +56,6 @@ export default function Manutencoes() {
   const [dataInicio, setDataInicio] = useState('');
   const [dataFim, setDataFim] = useState('');
 
-  // O botão só aparece se houver uma busca aplicada ou se datas estiverem filtradas
   const temFiltroAtivo =
     buscaAplicada !== '' || dataInicio !== '' || dataFim !== '';
 
@@ -63,9 +64,9 @@ export default function Manutencoes() {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
 
-  const [detalhe, setDetalhe] = useState(null);
-  const [detalheItens, setDetalheItens] = useState([]);
-  const [detalheLoading, setDetalheLoading] = useState(false);
+  // Estados para o Modal de Exclusão
+  const [modalRemoverAberto, setModalRemoverAberto] = useState(false);
+  const [manutencaoAlvo, setManutencaoAlvo] = useState(null);
 
   // 1. Listagem de manutenções com suporte a pesquisa e datas
   const {
@@ -82,7 +83,7 @@ export default function Manutencoes() {
   const meta = respostaManutencoes?.meta ?? null;
   const error = erroQuery?.message || '';
 
-  // 2. Auxiliares sob demanda (só buscam quando o modal abre)
+  // 2. Auxiliares sob demanda (só buscam quando o modal de criação abre)
   const { data: fornecedores = [] } = useQuery({
     queryKey: ['auxiliares-fornecedores'],
     queryFn: () => fetchAuxiliar('/auxiliares/fornecedores'),
@@ -95,6 +96,30 @@ export default function Manutencoes() {
     queryFn: () => fetchAuxiliar('/equipamentos'),
     enabled: modalAberto,
     staleTime: 1000 * 60 * 15,
+  });
+
+  // Mutation de Exclusão
+  const excluirMutation = useMutation({
+    mutationFn: async (id) => {
+      return await api.delete(`/manutencoes/${id}`, {
+        headers: { 'Content-Type': undefined },
+      });
+    },
+    onSuccess: (res) => {
+      toast.success(res?.message || 'Manutenção excluída com sucesso!');
+      fecharModalRemover();
+      queryClient.invalidateQueries({ queryKey: ['manutencoes'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard-summary'] });
+      queryClient.invalidateQueries({ queryKey: ['indicadores-rapidos'] });
+    },
+    onError: (err) => {
+      const mensagem =
+        err.response?.data?.message ||
+        err.message ||
+        'Não foi possível remover a manutenção.';
+      toast.error(mensagem);
+      fecharModalRemover();
+    },
   });
 
   function irParaPagina(novaPagina) {
@@ -144,6 +169,21 @@ export default function Manutencoes() {
     setForm({ ...form, itens: form.itens.filter((_, i) => i !== index) });
   }
 
+  function abrirModalRemover(item) {
+    setManutencaoAlvo(item);
+    setModalRemoverAberto(true);
+  }
+
+  function fecharModalRemover() {
+    setModalRemoverAberto(false);
+    setManutencaoAlvo(null);
+  }
+
+  function confirmarRemocao() {
+    if (!manutencaoAlvo) return;
+    excluirMutation.mutate(manutencaoAlvo.id);
+  }
+
   async function salvar(e) {
     e.preventDefault();
     setSaving(true);
@@ -165,7 +205,6 @@ export default function Manutencoes() {
       setModalAberto(false);
       toast.success(res?.message || 'Manutenção registrada com sucesso!');
 
-      // Sincroniza listagem e indicadores
       queryClient.invalidateQueries({ queryKey: ['manutencoes'] });
       queryClient.invalidateQueries({ queryKey: ['dashboard-summary'] });
       queryClient.invalidateQueries({ queryKey: ['indicadores-rapidos'] });
@@ -179,44 +218,6 @@ export default function Manutencoes() {
       toast.error(mensagem);
     } finally {
       setSaving(false);
-    }
-  }
-
-  async function excluir(item) {
-    if (!window.confirm('Remover esta manutenção e todos os seus itens?'))
-      return;
-    try {
-      const res = await api.delete(`/manutencoes/${item.id}`, {
-        headers: { 'Content-Type': undefined },
-      });
-
-      toast.success(res?.message || 'Manutenção excluída com sucesso!');
-
-      queryClient.invalidateQueries({ queryKey: ['manutencoes'] });
-      queryClient.invalidateQueries({ queryKey: ['dashboard-summary'] });
-      queryClient.invalidateQueries({ queryKey: ['indicadores-rapidos'] });
-    } catch (err) {
-      const mensagem =
-        err.response?.data?.message ||
-        err.message ||
-        'Não foi possível remover a manutenção.';
-      toast.error(mensagem);
-    }
-  }
-
-  async function abrirDetalhe(item) {
-    setDetalhe(item);
-    setDetalheLoading(true);
-    try {
-      const res = await api.get(`/manutencoes/${item.id}/itens`);
-      const payload = res?.data !== undefined ? res.data : res;
-      setDetalheItens(
-        payload?.items ?? (Array.isArray(payload) ? payload : []),
-      );
-    } catch {
-      setDetalheItens([]);
-    } finally {
-      setDetalheLoading(false);
     }
   }
 
@@ -321,7 +322,7 @@ export default function Manutencoes() {
         {!loading && error && <div className='empty-state'>{error}</div>}
         {!loading && !error && items.length === 0 && (
           <div className='empty-state'>
-            Nenhuma manutenção cadastrada ainda.
+            Nenhum registro de manutenção encontrado.
           </div>
         )}
 
@@ -359,14 +360,14 @@ export default function Manutencoes() {
                     <div className='table-actions'>
                       <button
                         className='btn btn-sm'
-                        onClick={() => abrirDetalhe(item)}
+                        onClick={() => navigate(`/manutencoes/${item.id}`)}
                       >
-                        Ver itens
+                        Gerenciar
                       </button>
                       {podeExcluir && (
                         <button
                           className='btn btn-sm btn-danger'
-                          onClick={() => excluir(item)}
+                          onClick={() => abrirModalRemover(item)}
                         >
                           Excluir
                         </button>
@@ -405,7 +406,7 @@ export default function Manutencoes() {
         )}
       </div>
 
-      {/* Modal: nova manutenção com itens */}
+      {/* Modal: Nova Manutenção */}
       {modalAberto && (
         <Modal
           title='Nova manutenção'
@@ -605,41 +606,28 @@ export default function Manutencoes() {
         </Modal>
       )}
 
-      {/* Modal: visualizar itens de uma manutenção existente */}
-      {detalhe && (
-        <Modal
-          title={`Itens — NF ${detalhe.nota_fiscal}`}
-          onClose={() => setDetalhe(null)}
-        >
-          {detalheLoading && <div className='empty-state'>Carregando…</div>}
-          {!detalheLoading && detalheItens.length === 0 && (
-            <div className='empty-state'>Nenhum item cadastrado.</div>
-          )}
-          {!detalheLoading && detalheItens.length > 0 && (
-            <table>
-              <thead>
-                <tr>
-                  <th>Descrição</th>
-                  <th>Qtd.</th>
-                  <th>Valor unit.</th>
-                </tr>
-              </thead>
-              <tbody>
-                {detalheItens.map((it) => (
-                  <tr key={it.id}>
-                    <td>{it.descricao}</td>
-                    <td className='mono'>{it.quantidade}</td>
-                    <td className='mono'>
-                      {Number(it.valor_unitario).toLocaleString('pt-BR', {
-                        style: 'currency',
-                        currency: 'BRL',
-                      })}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+      {/* Modal de Confirmação de Exclusão da Manutenção */}
+      {modalRemoverAberto && (
+        <Modal title='Excluir manutenção' onClose={fecharModalRemover}>
+          <p style={{ marginBottom: 20, color: 'var(--text-main, #333)' }}>
+            Tem certeza de que deseja remover a manutenção com solicitação{' '}
+            <strong>#{manutencaoAlvo?.solicitacao}</strong> (NF:{' '}
+            {manutencaoAlvo?.nota_fiscal}) e todos os seus itens associados?
+            Esta ação não pode ser desfeita.
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10 }}>
+            <button type='button' className='btn' onClick={fecharModalRemover}>
+              Cancelar
+            </button>
+            <button
+              type='button'
+              className='btn btn-danger'
+              onClick={confirmarRemocao}
+              disabled={excluirMutation.isPending}
+            >
+              {excluirMutation.isPending ? 'A remover…' : 'Excluir'}
+            </button>
+          </div>
         </Modal>
       )}
     </Layout>
