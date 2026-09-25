@@ -15,9 +15,19 @@ const ITEM_VAZIO = {
 
 const LIMIT = 20;
 
-// Busca principal das manutenções
-async function fetchManutencoes(page) {
-  const res = await api.get(`/manutencoes?page=${page}&limit=${LIMIT}`);
+async function fetchManutencoes(page, search, dataInicio, dataFim) {
+  const params = new URLSearchParams({ page, limit: LIMIT });
+  if (search?.trim()) params.set('search', search.trim());
+
+  // Enviando nos parâmetros exatos esperados pelo back-end (snake_case)
+  if (dataInicio) {
+    params.set('data_inicio', `${dataInicio}T00:00:00.000Z`);
+  }
+  if (dataFim) {
+    params.set('data_fim', `${dataFim}T23:59:59.999Z`);
+  }
+
+  const res = await api.get(`/manutencoes?${params.toString()}`);
   const payload = res?.data !== undefined ? res.data : res;
   return {
     items: payload?.items ?? (Array.isArray(payload) ? payload : []),
@@ -39,6 +49,14 @@ export default function Manutencoes() {
   const toast = useToast();
 
   const [page, setPage] = useState(1);
+  const [termoDigitado, setTermoDigitado] = useState('');
+  const [buscaAplicada, setBuscaAplicada] = useState('');
+  const [dataInicio, setDataInicio] = useState('');
+  const [dataFim, setDataFim] = useState('');
+
+  // O botão só aparece se houver uma busca aplicada ou se datas estiverem filtradas
+  const temFiltroAtivo =
+    buscaAplicada !== '' || dataInicio !== '' || dataFim !== '';
 
   const [modalAberto, setModalAberto] = useState(false);
   const [form, setForm] = useState(null);
@@ -49,14 +67,14 @@ export default function Manutencoes() {
   const [detalheItens, setDetalheItens] = useState([]);
   const [detalheLoading, setDetalheLoading] = useState(false);
 
-  // 1. Listagem de manutenções com cache de 30s
+  // 1. Listagem de manutenções com suporte a pesquisa e datas
   const {
     data: respostaManutencoes,
     isLoading: loading,
     error: erroQuery,
   } = useQuery({
-    queryKey: ['manutencoes', page],
-    queryFn: () => fetchManutencoes(page),
+    queryKey: ['manutencoes', page, buscaAplicada, dataInicio, dataFim],
+    queryFn: () => fetchManutencoes(page, buscaAplicada, dataInicio, dataFim),
     staleTime: 1000 * 30,
   });
 
@@ -81,6 +99,20 @@ export default function Manutencoes() {
 
   function irParaPagina(novaPagina) {
     setPage(novaPagina);
+  }
+
+  function buscar(e) {
+    e.preventDefault();
+    setPage(1);
+    setBuscaAplicada(termoDigitado);
+  }
+
+  function limparFiltros() {
+    setTermoDigitado('');
+    setBuscaAplicada('');
+    setDataInicio('');
+    setDataFim('');
+    setPage(1);
   }
 
   function abrirNova() {
@@ -197,6 +229,89 @@ export default function Manutencoes() {
         </button>
       }
     >
+      {/* Barra de Pesquisa e Filtro por Data */}
+      <form
+        className='toolbar'
+        onSubmit={buscar}
+        style={{
+          display: 'flex',
+          gap: 12,
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          marginBottom: 16,
+        }}
+      >
+        <input
+          type='search'
+          placeholder='Pesquisar por nota fiscal, forma de aquisição…'
+          value={termoDigitado}
+          onChange={(e) => setTermoDigitado(e.target.value)}
+          style={{ flex: 1, minWidth: 220 }}
+        />
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <label style={{ fontSize: '13px', color: 'var(--text-muted, #666)' }}>
+            De:
+          </label>
+          <input
+            type='date'
+            value={dataInicio}
+            onChange={(e) => {
+              setDataInicio(e.target.value);
+              setPage(1);
+            }}
+            style={{
+              height: '38px',
+              padding: '0 10px',
+              borderRadius: 'var(--radius, 4px)',
+              border: '1px solid var(--border)',
+              background: 'var(--bg-input, #fff)',
+              color: 'var(--text-main, #333)',
+              fontSize: '13.5px',
+            }}
+          />
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <label style={{ fontSize: '13px', color: 'var(--text-muted, #666)' }}>
+            Até:
+          </label>
+          <input
+            type='date'
+            value={dataFim}
+            onChange={(e) => {
+              setDataFim(e.target.value);
+              setPage(1);
+            }}
+            style={{
+              height: '38px',
+              padding: '0 10px',
+              borderRadius: 'var(--radius, 4px)',
+              border: '1px solid var(--border)',
+              background: 'var(--bg-input, #fff)',
+              color: 'var(--text-main, #333)',
+              fontSize: '13.5px',
+            }}
+          />
+        </div>
+
+        <button type='submit' className='btn' style={{ height: '38px' }}>
+          Filtrar
+        </button>
+
+        {temFiltroAtivo && (
+          <button
+            type='button'
+            className='btn'
+            onClick={limparFiltros}
+            style={{ height: '38px' }}
+            title='Limpar filtros e busca'
+          >
+            Limpar filtros
+          </button>
+        )}
+      </form>
+
       <div className='panel'>
         <div className='panel-header'>
           <h2>{meta?.total ?? items.length} ordem(ns) de manutenção</h2>

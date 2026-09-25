@@ -754,3 +754,11 @@ tbody tr:last-child td {
     transform: translateX(0);
   }
 }
+
+.toolbar select {
+  padding: 7px 11px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  max-width: 220px;
+}

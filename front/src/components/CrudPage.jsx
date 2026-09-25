@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
@@ -8,9 +8,11 @@ import Modal from './Modal';
 
 const LIMIT = 20;
 
-// Busca genérica para qualquer endpoint auxiliar
-async function fetchCrudData(endpoint, page) {
-  const res = await api.get(`${endpoint}?page=${page}&limit=${LIMIT}`);
+async function fetchCrudData(endpoint, page, search) {
+  const params = new URLSearchParams({ page, limit: LIMIT });
+  if (search?.trim()) params.set('search', search.trim());
+
+  const res = await api.get(`${endpoint}?${params.toString()}`);
   const payload = res?.data !== undefined ? res.data : res;
   return {
     items: payload?.items ?? (Array.isArray(payload) ? payload : []),
@@ -25,18 +27,29 @@ export default function CrudPage({ config }) {
   const toast = useToast();
 
   const [page, setPage] = useState(1);
-  const [modalItem, setModalItem] = useState(null); // null = fechado; {} = novo; {...} = editar
+  const [termoDigitado, setTermoDigitado] = useState('');
+  const [buscaAplicada, setBuscaAplicada] = useState('');
+
+  const [modalItem, setModalItem] = useState(null);
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
 
-  // Cache de 10 minutos para qualquer tela de cadastro auxiliar
+  // Limpa a pesquisa e volta para a página 1 sempre que o endpoint/rota mudar (ex: de /locais para /predios)
+  useEffect(() => {
+    setPage(1);
+    setTermoDigitado('');
+    setBuscaAplicada('');
+  }, [config.endpoint]);
+
+  const temFiltroAtivo = termoDigitado.trim() !== '' || buscaAplicada !== '';
+
   const {
     data: respostaCrud,
     isLoading: loading,
     error: erroQuery,
   } = useQuery({
-    queryKey: ['crud-page', config.endpoint, page],
-    queryFn: () => fetchCrudData(config.endpoint, page),
+    queryKey: ['crud-page', config.endpoint, page, buscaAplicada],
+    queryFn: () => fetchCrudData(config.endpoint, page, buscaAplicada),
     staleTime: 1000 * 60 * 10,
   });
 
@@ -46,6 +59,18 @@ export default function CrudPage({ config }) {
 
   function irParaPagina(novaPagina) {
     setPage(novaPagina);
+  }
+
+  function buscar(e) {
+    e.preventDefault();
+    setPage(1);
+    setBuscaAplicada(termoDigitado);
+  }
+
+  function limparBusca() {
+    setTermoDigitado('');
+    setBuscaAplicada('');
+    setPage(1);
   }
 
   function abrirNovo() {
@@ -77,7 +102,6 @@ export default function CrudPage({ config }) {
       setModalItem(null);
       toast.success(res?.message || 'Registro salvo com sucesso!');
 
-      // Invalida os caches correspondentes
       queryClient.invalidateQueries({
         queryKey: ['crud-page', config.endpoint],
       });
@@ -107,14 +131,12 @@ export default function CrudPage({ config }) {
     )
       return;
     try {
-      // Headers com Content-Type undefined para evitar o erro FST_ERR_CTP_EMPTY_JSON_BODY do Fastify
       const res = await api.delete(`${config.endpoint}/${item.id}`, {
         headers: { 'Content-Type': undefined },
       });
 
       toast.success(res?.message || 'Registro excluído com sucesso!');
 
-      // Invalida os caches correspondentes após remoção
       queryClient.invalidateQueries({
         queryKey: ['crud-page', config.endpoint],
       });
@@ -142,6 +164,40 @@ export default function CrudPage({ config }) {
         </button>
       }
     >
+      <form
+        className='toolbar'
+        onSubmit={buscar}
+        style={{
+          display: 'flex',
+          gap: 12,
+          alignItems: 'center',
+          marginBottom: 16,
+        }}
+      >
+        <input
+          type='search'
+          placeholder='Pesquisar registros…'
+          value={termoDigitado}
+          onChange={(e) => setTermoDigitado(e.target.value)}
+          style={{ flex: 1, minWidth: 240 }}
+        />
+        <button type='submit' className='btn' style={{ height: '38px' }}>
+          Pesquisar
+        </button>
+
+        {temFiltroAtivo && (
+          <button
+            type='button'
+            className='btn'
+            onClick={limparBusca}
+            style={{ height: '38px' }}
+            title='Limpar pesquisa'
+          >
+            Limpar
+          </button>
+        )}
+      </form>
+
       <div className='panel'>
         <div className='panel-header'>
           <h2>{meta?.total ?? items.length} registro(s)</h2>

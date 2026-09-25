@@ -50,6 +50,10 @@ export default function Usuarios() {
   const [filtroRole, setFiltroRole] = useState('');
   const [filtroStatus, setFiltroStatus] = useState('');
 
+  // O botão só aparece se houver uma busca aplicada ou se os selects de filtro estiverem selecionados
+  const temFiltroAtivo =
+    buscaAplicada !== '' || filtroRole !== '' || filtroStatus !== '';
+
   const [modalRemoverAberto, setModalRemoverAberto] = useState(false);
   const [usuarioAlvo, setUsuarioAlvo] = useState(null);
 
@@ -251,15 +255,18 @@ export default function Usuarios() {
           Filtrar
         </button>
 
-        <button
-          type='button'
-          className='btn'
-          onClick={limparFiltros}
-          style={{ height: '38px' }}
-          title='Limpar filtros e busca'
-        >
-          Limpar
-        </button>
+        {/* O botão aparece apenas quando uma busca ou filtro foi efetivamente aplicado */}
+        {temFiltroAtivo && (
+          <button
+            type='button'
+            className='btn'
+            onClick={limparFiltros}
+            style={{ height: '38px' }}
+            title='Limpar filtros e busca'
+          >
+            Limpar filtros
+          </button>
+        )}
       </form>
 
       <div className='panel'>
@@ -401,7 +408,7 @@ export default function Usuarios() {
         <Modal
           isOpen={modalEdicaoAberto}
           onClose={fecharModalEdicao}
-          title={`Editar usuário: ${usuarioAlvo?.name}`}
+          title={`Editar utilizador: ${usuarioAlvo?.name}`}
         >
           <form onSubmit={handleSubmitEdicao}>
             <div className='field' style={{ marginBottom: 14 }}>

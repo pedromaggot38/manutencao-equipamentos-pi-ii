@@ -28,10 +28,42 @@ const CAMPOS_VAZIOS = {
 
 const LIMIT = 10;
 
+// Filtros da listagem (valores vazios = sem filtro)
+const FILTROS_VAZIOS = {
+  situacao: '',
+  categoria_id: '',
+  marca_id: '',
+  predio_id: '',
+  ordenacao: '',
+};
+
+// Opções de ordenação: valor = "campo:direção"
+const OPCOES_ORDENACAO = [
+  { value: '', label: 'Mais recentes' },
+  { value: 'patrimonio:asc', label: 'Patrimônio (A–Z)' },
+  { value: 'valor_bem:desc', label: 'Maior valor' },
+  { value: 'valor_bem:asc', label: 'Menor valor' },
+  { value: 'capacidade:desc', label: 'Maior capacidade' },
+];
+
 // Funções de busca com desempacotamento seguro
-async function fetchEquipamentos(page, search) {
+async function fetchEquipamentos(page, search, filtros = {}) {
   const params = new URLSearchParams({ page, limit: LIMIT });
   if (search?.trim()) params.set('search', search.trim());
+
+  // Envia só os filtros preenchidos
+  const { ordenacao, ...outrosFiltros } = filtros;
+  Object.entries(outrosFiltros).forEach(([chave, valor]) => {
+    if (valor !== '' && valor !== null && valor !== undefined) {
+      params.set(chave, valor);
+    }
+  });
+
+  if (ordenacao) {
+    const [sortBy, sortOrder] = ordenacao.split(':');
+    params.set('sortBy', sortBy);
+    params.set('sortOrder', sortOrder);
+  }
 
   const res = await api.get(`/equipamentos?${params.toString()}`);
   return res?.data !== undefined ? res : { data: res, meta: null };
@@ -52,6 +84,10 @@ export default function Equipamentos() {
   const [page, setPage] = useState(1);
   const [termoDigitado, setTermoDigitado] = useState('');
   const [buscaAplicada, setBuscaAplicada] = useState('');
+  const [filtros, setFiltros] = useState(FILTROS_VAZIOS);
+
+  const temFiltroAtivo =
+    buscaAplicada !== '' || Object.values(filtros).some((v) => v !== '');
 
   const [modalItem, setModalItem] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -63,8 +99,8 @@ export default function Equipamentos() {
     isLoading: loading,
     error: erroQuery,
   } = useQuery({
-    queryKey: ['equipamentos', page, buscaAplicada],
-    queryFn: () => fetchEquipamentos(page, buscaAplicada),
+    queryKey: ['equipamentos', page, buscaAplicada, filtros],
+    queryFn: () => fetchEquipamentos(page, buscaAplicada, filtros),
     staleTime: 1000 * 30,
   });
 
@@ -95,6 +131,36 @@ export default function Equipamentos() {
     queryFn: () => fetchAuxiliar('/auxiliares/locais', 500),
     staleTime: 1000 * 60 * 15,
   });
+
+  const { data: predios = [] } = useQuery({
+    queryKey: ['auxiliares-predios'],
+    queryFn: () => fetchAuxiliar('/auxiliares/predios', 100),
+    staleTime: 1000 * 60 * 15,
+  });
+
+  const { data: resumo } = useQuery({
+    queryKey: ['dashboard-summary'],
+    queryFn: async () => {
+      const res = await api.get('/dashboard/summary');
+      return res?.data !== undefined ? res.data : res;
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+  const situacoes = (resumo?.equipamentosPorSituacao ?? [])
+    .map((s) => s.nome)
+    .filter(Boolean);
+
+  function alterarFiltro(chave, valor) {
+    setPage(1);
+    setFiltros((atual) => ({ ...atual, [chave]: valor }));
+  }
+
+  function limparFiltros() {
+    setPage(1);
+    setTermoDigitado('');
+    setBuscaAplicada('');
+    setFiltros(FILTROS_VAZIOS);
+  }
 
   function irParaPagina(novaPagina) {
     setPage(novaPagina);
@@ -205,9 +271,74 @@ export default function Equipamentos() {
           value={termoDigitado}
           onChange={(e) => setTermoDigitado(e.target.value)}
         />
-        <button type='submit' className='btn btn-sm'>
+        <select
+          value={filtros.situacao}
+          onChange={(e) => alterarFiltro('situacao', e.target.value)}
+        >
+          <option value=''>Todas as situações</option>
+          {situacoes.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={filtros.categoria_id}
+          onChange={(e) => alterarFiltro('categoria_id', e.target.value)}
+        >
+          <option value=''>Todas as categorias</option>
+          {categorias.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.nome_categoria}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={filtros.predio_id}
+          onChange={(e) => alterarFiltro('predio_id', e.target.value)}
+        >
+          <option value=''>Todos os prédios</option>
+          {predios.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.nome_predio}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={filtros.marca_id}
+          onChange={(e) => alterarFiltro('marca_id', e.target.value)}
+        >
+          <option value=''>Todas as marcas</option>
+          {marcas.map((m) => (
+            <option key={m.id} value={m.id}>
+              {m.marca}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={filtros.ordenacao}
+          onChange={(e) => alterarFiltro('ordenacao', e.target.value)}
+        >
+          {OPCOES_ORDENACAO.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+
+        <button type='submit' className='btn'>
           Buscar
         </button>
+
+        {temFiltroAtivo && (
+          <button type='button' className='btn' onClick={limparFiltros}>
+            Limpar filtros
+          </button>
+        )}
       </form>
 
       <div className='panel'>
