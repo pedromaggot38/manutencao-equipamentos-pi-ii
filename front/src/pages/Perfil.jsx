@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api/client';
 import { useAuth } from '../context/AuthContext';
@@ -13,18 +13,15 @@ export default function Perfil() {
 
   const [abaAtiva, setAbaAtiva] = useState('dados');
 
-  // Aba 1: Dados Pessoais
   const [name, setName] = useState(user?.name ?? '');
   const [phone, setPhone] = useState(user?.phone ?? '');
   const [salvandoDados, setSalvandoDados] = useState(false);
 
-  // Aba 2: Segurança
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [salvandoSenha, setSalvandoSenha] = useState(false);
 
-  // Aba 3: Verificação & E-mail
   const [modoTrocaEmail, setModoTrocaEmail] = useState(false);
   const [novoEmail, setNovoEmail] = useState('');
   const [codigoOtp, setCodigoOtp] = useState('');
@@ -32,12 +29,10 @@ export default function Perfil() {
   const [enviandoCodigo, setEnviandoCodigo] = useState(false);
   const [validandoCodigo, setValidandoCodigo] = useState(false);
 
-  // Aba 4: Desativar Conta Própria
   const [senhaDesativacao, setSenhaDesativacao] = useState('');
   const [modalDesativarAberto, setModalDesativarAberto] = useState(false);
   const [desativandoConta, setDesativandoConta] = useState(false);
 
-  // Sincroniza os estados locais sempre que o user do AuthContext carregar ou mudar
   useEffect(() => {
     if (user) {
       setName(user.name ?? '');
@@ -45,7 +40,6 @@ export default function Perfil() {
     }
   }, [user]);
 
-  // Atualizar Perfil (apenas dados textuais)
   async function handleSalvarPerfil(e) {
     e.preventDefault();
 
@@ -83,7 +77,6 @@ export default function Perfil() {
     }
   }
 
-  // Alterar Senha
   async function handleAlterarSenha(e) {
     e.preventDefault();
     if (newPassword !== passwordConfirm) {
@@ -119,7 +112,6 @@ export default function Perfil() {
     }
   }
 
-  // Solicitar Código de Verificação / E-mail
   async function handleSolicitarCodigo() {
     setEnviandoCodigo(true);
     try {
@@ -149,7 +141,6 @@ export default function Perfil() {
     }
   }
 
-  // Confirmar Código de Verificação / E-mail
   async function handleConfirmarCodigo(e) {
     e.preventDefault();
     if (!codigoOtp.trim()) {
@@ -195,7 +186,6 @@ export default function Perfil() {
     }
   }
 
-  // Desativar Própria Conta
   async function handleDesativarConta(e) {
     e.preventDefault();
     if (!senhaDesativacao.trim()) {
@@ -267,7 +257,7 @@ export default function Perfil() {
         )}
 
         <div className='panel'>
-          {/* Cabeçalho de Navegação por Abas (Sem scroll vertical indesejado) */}
+          {/* Cabeçalho de Navegação por Abas */}
           <div
             style={{
               display: 'flex',
@@ -523,8 +513,8 @@ export default function Perfil() {
                   }}
                 >
                   {user?.isVerified
-                    ? '✓ Sua conta está verificada e com acesso ativo.'
-                    : '⚠ Sua conta ainda não foi verificada. Solicite o código abaixo para confirmá-la.'}
+                    ? '✓ A sua conta está verificada e com acesso ativo.'
+                    : '⚠ A sua conta ainda não foi verificada. Solicite o código abaixo para confirmá-la.'}
                 </div>
 
                 <div
@@ -617,32 +607,35 @@ export default function Perfil() {
                   </div>
                 )}
 
-                <div style={{ display: 'flex', gap: 10 }}>
-                  <button
-                    type='button'
-                    className='btn'
-                    onClick={handleSolicitarCodigo}
-                    disabled={enviandoCodigo}
-                  >
-                    {enviandoCodigo
-                      ? 'Enviando…'
-                      : codigoEnviado
-                        ? 'Reenviar código'
-                        : modoTrocaEmail
-                          ? 'Enviar código para novo e-mail'
-                          : 'Enviar código de ativação'}
-                  </button>
-
-                  {codigoEnviado && (
+                {/* Exibe as ações apenas se for troca de e-mail ou se a conta não estiver verificada */}
+                {(modoTrocaEmail || !user?.isVerified) && (
+                  <div style={{ display: 'flex', gap: 10 }}>
                     <button
-                      type='submit'
-                      className='btn btn-primary'
-                      disabled={validandoCodigo}
+                      type='button'
+                      className='btn'
+                      onClick={handleSolicitarCodigo}
+                      disabled={enviandoCodigo}
                     >
-                      {validandoCodigo ? 'Confirmando…' : 'Confirmar código'}
+                      {enviandoCodigo
+                        ? 'Enviando…'
+                        : codigoEnviado
+                          ? 'Reenviar código'
+                          : modoTrocaEmail
+                            ? 'Enviar código para novo e-mail'
+                            : 'Enviar código de ativação'}
                     </button>
-                  )}
-                </div>
+
+                    {codigoEnviado && (
+                      <button
+                        type='submit'
+                        className='btn btn-primary'
+                        disabled={validandoCodigo}
+                      >
+                        {validandoCodigo ? 'Confirmando…' : 'Confirmar código'}
+                      </button>
+                    )}
+                  </div>
+                )}
               </form>
             )}
 
@@ -675,9 +668,9 @@ export default function Perfil() {
                       lineHeight: 1.5,
                     }}
                   >
-                    Ao desativar sua conta, você perderá o acesso imediato ao
-                    sistema até que um administrador reative seu perfil. Esta
-                    ação exige a confirmação da sua senha atual.
+                    Ao desativar a sua conta, perderá o acesso imediato ao
+                    sistema até que um administrador reative o seu perfil. Esta
+                    ação exige a confirmação da sua palavra-passe atual.
                   </p>
                 </div>
 
@@ -686,7 +679,7 @@ export default function Perfil() {
                   className='btn btn-danger'
                   onClick={() => setModalDesativarAberto(true)}
                 >
-                  Desativar minha conta
+                  Desativar a minha conta
                 </button>
               </div>
             )}
@@ -712,16 +705,16 @@ export default function Perfil() {
                 color: 'var(--text-main)',
               }}
             >
-              Tem certeza absoluta de que deseja desativar sua conta? Por favor,
-              digite sua senha atual para continuar:
+              Tem a certeza de que deseja desativar a sua conta? Por favor,
+              insira a sua palavra-passe atual para continuar:
             </p>
 
             <div className='field' style={{ marginBottom: 20 }}>
-              <label htmlFor='senha-desativacao'>Sua senha atual</label>
+              <label htmlFor='senha-desativacao'>Palavra-passe atual</label>
               <input
                 id='senha-desativacao'
                 type='password'
-                placeholder='Digite sua senha'
+                placeholder='Insira a sua palavra-passe'
                 value={senhaDesativacao}
                 onChange={(e) => setSenhaDesativacao(e.target.value)}
                 required
@@ -749,7 +742,7 @@ export default function Perfil() {
               >
                 {desativandoConta
                   ? 'Desativando…'
-                  : 'Sim, desativar minha conta'}
+                  : 'Sim, desativar a minha conta'}
               </button>
             </div>
           </form>

@@ -57,7 +57,6 @@ function formatarMoeda(valor) {
   });
 }
 
-// Única requisição de dados de toda a tela
 async function fetchDashboardSummary() {
   const res = await api.get('/dashboard/summary');
   return res?.data !== undefined ? res.data : res;
@@ -66,7 +65,6 @@ async function fetchDashboardSummary() {
 export default function Dashboard() {
   const { user } = useAuth();
 
-  // Uma única Query gerenciada pelo TanStack Query (5 minutos de cache)
   const {
     data: analytics,
     isLoading: loadingAnalytics,

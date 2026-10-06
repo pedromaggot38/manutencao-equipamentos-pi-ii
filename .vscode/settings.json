@@ -4,5 +4,6 @@
     "backend/**",
     "**/*.db",
     "**/*.sqlite"
-  ]
+  ],
+  "prisma.pinToPrisma6": false
 }

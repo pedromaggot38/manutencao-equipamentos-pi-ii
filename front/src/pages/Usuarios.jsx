@@ -6,7 +6,6 @@ import { useToast } from '../context/ToastContext';
 import Layout from '../components/Layout';
 import Modal from '../components/Modal';
 
-// Classes CSS para os pontos indicadores de status
 const STATUS_DOT_CLASS = {
   active: 'status-dot-active',
   pending: 'status-dot-pending',
@@ -79,7 +78,6 @@ export default function Usuarios() {
     status: 'active',
   });
 
-  // Estado do Modal de Criação
   const [modalCriacaoAberto, setModalCriacaoAberto] = useState(false);
   const [formCriacao, setFormCriacao] = useState(FORM_NOVO_PADRAO);
 
@@ -186,7 +184,7 @@ export default function Usuarios() {
   function abrirModalCriar() {
     setFormCriacao({
       ...FORM_NOVO_PADRAO,
-      role: 'user', // padrão seguro
+      role: 'user',
     });
     setModalCriacaoAberto(true);
   }

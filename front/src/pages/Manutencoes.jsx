@@ -35,7 +35,6 @@ async function fetchManutencoes(page, search, dataInicio, dataFim) {
   };
 }
 
-// Busca dos auxiliares no select
 async function fetchAuxiliar(endpoint) {
   const res = await api.get(`${endpoint}?limit=100`);
   const payload = res?.data !== undefined ? res.data : res;
@@ -64,11 +63,9 @@ export default function Manutencoes() {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
 
-  // Estados para o Modal de Exclusão
   const [modalRemoverAberto, setModalRemoverAberto] = useState(false);
   const [manutencaoAlvo, setManutencaoAlvo] = useState(null);
 
-  // 1. Listagem de manutenções com suporte a pesquisa e datas
   const {
     data: respostaManutencoes,
     isLoading: loading,
@@ -83,7 +80,6 @@ export default function Manutencoes() {
   const meta = respostaManutencoes?.meta ?? null;
   const error = erroQuery?.message || '';
 
-  // 2. Auxiliares sob demanda (só buscam quando o modal de criação abre)
   const { data: fornecedores = [] } = useQuery({
     queryKey: ['auxiliares-fornecedores'],
     queryFn: () => fetchAuxiliar('/auxiliares/fornecedores'),
@@ -98,7 +94,6 @@ export default function Manutencoes() {
     staleTime: 1000 * 60 * 15,
   });
 
-  // Mutation de Exclusão
   const excluirMutation = useMutation({
     mutationFn: async (id) => {
       return await api.delete(`/manutencoes/${id}`, {

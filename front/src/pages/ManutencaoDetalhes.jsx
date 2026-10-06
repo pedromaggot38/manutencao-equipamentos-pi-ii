@@ -39,7 +39,6 @@ export default function ManutencaoDetalhes() {
   const [modalRemoverItemAberto, setModalRemoverItemAberto] = useState(false);
   const [itemAlvoRemocao, setItemAlvoRemocao] = useState(null);
 
-  // 1. Busca dados da ordem de manutenção (Master)
   const {
     data: respostaManutencao,
     isLoading: loadingManutencao,
@@ -52,10 +51,8 @@ export default function ManutencaoDetalhes() {
     enabled: Boolean(id),
   });
 
-  // O api client já extrai res.data, logo respostaManutencao é o corpo retornado pelo resfc
   const manutencao = respostaManutencao?.data ?? respostaManutencao;
 
-  // 2. Busca itens da manutenção (Detail)
   const { data: respostaItens, isLoading: loadingItens } = useQuery({
     queryKey: ['manutencao-itens', id],
     queryFn: async () => {
@@ -71,7 +68,6 @@ export default function ManutencaoDetalhes() {
       ? payloadItens
       : [];
 
-  // 3. Auxiliares
   const { data: fornecedores = [] } = useQuery({
     queryKey: ['auxiliares-fornecedores'],
     queryFn: () => fetchAuxiliar('/auxiliares/fornecedores'),
@@ -109,7 +105,6 @@ export default function ManutencaoDetalhes() {
     setModalEditarManutencaoAberto(true);
   }
 
-  // Mutation: Salvar dados da manutenção
   const salvarManutencaoMutation = useMutation({
     mutationFn: async (dados) => {
       const payload = {
@@ -141,7 +136,6 @@ export default function ManutencaoDetalhes() {
     },
   });
 
-  // Mutation: Salvar Item (Criar ou Editar)
   const salvarItemMutation = useMutation({
     mutationFn: async ({ itemId, dados }) => {
       const payload = {
@@ -178,7 +172,6 @@ export default function ManutencaoDetalhes() {
     },
   });
 
-  // Mutation: Remover Item
   const removerItemMutation = useMutation({
     mutationFn: async (itemId) => {
       return await api.delete(`/manutencoes/${id}/itens/${itemId}`);
@@ -250,7 +243,6 @@ export default function ManutencaoDetalhes() {
     0,
   );
 
-  // Estados de Carregamento e Erro
   if (loadingManutencao) {
     return (
       <Layout title='Carregando manutenção…'>

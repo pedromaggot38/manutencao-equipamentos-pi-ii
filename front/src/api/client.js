@@ -1,4 +1,3 @@
-// URL base da API. Em dev, o Vite expõe variáveis prefixadas com VITE_.
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1';
 
 let refreshingPromise = null;
@@ -42,7 +41,6 @@ export async function apiFetch(
 ) {
   const reqHeaders = { ...headers };
 
-  // Só anexa Content-Type se houver corpo a ser enviado
   if (body !== undefined) {
     reqHeaders['Content-Type'] = 'application/json';
   } else if (
@@ -67,7 +65,6 @@ export async function apiFetch(
       await refreshAccessToken();
       res = await doFetch();
     } catch {
-      // Refresh falhou: sessão realmente encerrou
       window.dispatchEvent(
         new CustomEvent('session-expired', {
           detail: 'Sua sessão expirou. Por favor, entre novamente.',

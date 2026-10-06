@@ -1,16 +1,15 @@
 import { api } from '../api/client';
 
-// Busca uma lista completa, paginando automaticamente. Usamos um limite
-// conservador por página porque a API rejeita valores de "limit" muito altos
-// (validação de schema no backend).
 const LIMIT_SEGURO = 100;
 
 export async function buscarTudo(endpoint, limitPorPagina = LIMIT_SEGURO) {
   let pagina = 1;
   let todos = [];
-  // Limite de segurança para nunca entrar num loop infinito por engano.
+
   for (let tentativas = 0; tentativas < 200; tentativas++) {
-    const json = await api.get(`${endpoint}?page=${pagina}&limit=${limitPorPagina}`);
+    const json = await api.get(
+      `${endpoint}?page=${pagina}&limit=${limitPorPagina}`,
+    );
     const lista = json?.data?.items ?? json?.data ?? [];
     todos = todos.concat(Array.isArray(lista) ? lista : []);
     const meta = json?.meta;
@@ -20,7 +19,6 @@ export async function buscarTudo(endpoint, limitPorPagina = LIMIT_SEGURO) {
   return todos;
 }
 
-// Executa promessas em lotes, para não disparar 117+ requisições simultâneas.
 async function emLotes(itens, tamanhoDoLote, tarefa) {
   const resultados = [];
   for (let i = 0; i < itens.length; i += tamanhoDoLote) {
@@ -59,7 +57,6 @@ export async function carregarDadosAnalytics(onProgresso) {
     }
   });
 
-  // --- Agregações ---
   const gastosPorPredio = new Map();
   const gastosPorCategoria = new Map();
   const contagemPorEquipamento = new Map(); // equipamento_id -> nº de itens de manutenção (recorrência)
@@ -73,11 +70,14 @@ export async function carregarDadosAnalytics(onProgresso) {
       gastosPorPredio.set(predio, (gastosPorPredio.get(predio) ?? 0) + valor);
 
       const categoria = info?.categoria ?? 'Sem categoria';
-      gastosPorCategoria.set(categoria, (gastosPorCategoria.get(categoria) ?? 0) + valor);
+      gastosPorCategoria.set(
+        categoria,
+        (gastosPorCategoria.get(categoria) ?? 0) + valor,
+      );
 
       contagemPorEquipamento.set(
         item.equipamento_id,
-        (contagemPorEquipamento.get(item.equipamento_id) ?? 0) + 1
+        (contagemPorEquipamento.get(item.equipamento_id) ?? 0) + 1,
       );
     }
   }
@@ -85,7 +85,10 @@ export async function carregarDadosAnalytics(onProgresso) {
   const equipamentosPorSituacao = new Map();
   for (const eq of equipamentos) {
     const situacao = eq.situacao ?? 'Não informado';
-    equipamentosPorSituacao.set(situacao, (equipamentosPorSituacao.get(situacao) ?? 0) + 1);
+    equipamentosPorSituacao.set(
+      situacao,
+      (equipamentosPorSituacao.get(situacao) ?? 0) + 1,
+    );
   }
 
   const manutencoesPorTipo = new Map();
@@ -109,7 +112,9 @@ export async function carregarDadosAnalytics(onProgresso) {
     .sort((a, b) => new Date(a.data) - new Date(b.data));
 
   const paraArray = (mapa) =>
-    [...mapa.entries()].map(([nome, valor]) => ({ nome, valor })).sort((a, b) => b.valor - a.valor);
+    [...mapa.entries()]
+      .map(([nome, valor]) => ({ nome, valor }))
+      .sort((a, b) => b.valor - a.valor);
 
   return {
     totalEquipamentos: equipamentos.length,

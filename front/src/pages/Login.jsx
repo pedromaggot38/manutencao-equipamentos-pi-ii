@@ -15,11 +15,9 @@ export default function Login() {
   const [isRegistering, setIsRegistering] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  // Formulário Login
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // Formulário Setup Root
   const [rootForm, setRootForm] = useState({
     name: '',
     username: '',
@@ -28,7 +26,6 @@ export default function Login() {
     passwordConfirm: '',
   });
 
-  // Formulário Registo Comum (/auth/signup)
   const [registerForm, setRegisterForm] = useState({
     name: '',
     username: '',

@@ -25,7 +25,6 @@ export function AuthProvider({ children }) {
 
   const [loading, setLoading] = useState(true);
 
-  // Escuta expiração da sessão disparada pelas chamadas de API
   useEffect(() => {
     const handleExpired = (e) => {
       setUser(null);
@@ -42,13 +41,16 @@ export function AuthProvider({ children }) {
     };
   }, [toast]);
 
-  // Checagem e validação inicial de credenciais
   useEffect(() => {
     let isMounted = true;
 
     (async () => {
       try {
-        // 1. Tenta validar a sessão atual diretamente chamando o /me
+        const storedToken = localStorage.getItem('@App:token');
+        if (storedToken) {
+          setAccessToken(storedToken);
+        }
+
         try {
           const me = await fetchMe();
           if (isMounted && me) {
@@ -57,10 +59,9 @@ export function AuthProvider({ children }) {
             return;
           }
         } catch {
-          // Se o /me der 401, prossegue para renovar via cookie refreshToken
+          // Token ausente ou expirado (401); prossegue normalmente para tentar o refresh
         }
 
-        // 2. Tenta o refresh da sessão usando o cookie HttpOnly
         const json = await apiFetch('/auth/refresh', {
           method: 'POST',
           body: {},
@@ -70,9 +71,9 @@ export function AuthProvider({ children }) {
         const token = json?.data?.accessToken;
         if (token) {
           setAccessToken(token);
+          localStorage.setItem('@App:token', token);
         }
 
-        // Busca os dados atualizados do usuário pós-refresh
         const me = await fetchMe();
         if (isMounted && me) {
           setUser(me);
@@ -99,6 +100,12 @@ export function AuthProvider({ children }) {
 
   const login = useCallback(async (credentials) => {
     const data = await apiSignin(credentials);
+
+    if (data?.accessToken) {
+      setAccessToken(data.accessToken);
+      localStorage.setItem('@App:token', data.accessToken);
+    }
+
     setUser(data.user);
     localStorage.setItem('@App:user', JSON.stringify(data.user));
     return data.user;

@@ -34,11 +34,9 @@ export default function CrudPage({ config }) {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
 
-  // Estados para o Modal de Exclusão
   const [modalRemoverAberto, setModalRemoverAberto] = useState(false);
   const [itemAlvo, setItemAlvo] = useState(null);
 
-  // Limpa a pesquisa e volta para a página 1 sempre que o endpoint/rota mudar
   useEffect(() => {
     setPage(1);
     setTermoDigitado('');
@@ -61,7 +59,6 @@ export default function CrudPage({ config }) {
   const meta = respostaCrud?.meta ?? null;
   const error = erroQuery?.message || '';
 
-  // Mutation de Exclusão
   const excluirMutation = useMutation({
     mutationFn: async (id) => {
       return await api.delete(`${config.endpoint}/${id}`, {
@@ -133,7 +130,6 @@ export default function CrudPage({ config }) {
     excluirMutation.mutate(itemAlvo.id);
   }
 
-  // Tenta obter o nome/identificador amigável do registro para o texto de confirmação
   function getIdentificadorItem(item) {
     if (!item) return '';
     return (

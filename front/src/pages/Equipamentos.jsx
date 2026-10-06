@@ -28,7 +28,6 @@ const CAMPOS_VAZIOS = {
 
 const LIMIT = 10;
 
-// Filtros da listagem (valores vazios = sem filtro)
 const FILTROS_VAZIOS = {
   situacao: '',
   categoria_id: '',
@@ -37,7 +36,6 @@ const FILTROS_VAZIOS = {
   ordenacao: '',
 };
 
-// Opções de ordenação: valor = "campo:direção"
 const OPCOES_ORDENACAO = [
   { value: '', label: 'Mais recentes' },
   { value: 'patrimonio:asc', label: 'Patrimônio (A–Z)' },
@@ -46,12 +44,10 @@ const OPCOES_ORDENACAO = [
   { value: 'capacidade:desc', label: 'Maior capacidade' },
 ];
 
-// Funções de busca com desempacotamento seguro
 async function fetchEquipamentos(page, search, filtros = {}) {
   const params = new URLSearchParams({ page, limit: LIMIT });
   if (search?.trim()) params.set('search', search.trim());
 
-  // Envia só os filtros preenchidos
   const { ordenacao, ...outrosFiltros } = filtros;
   Object.entries(outrosFiltros).forEach(([chave, valor]) => {
     if (valor !== '' && valor !== null && valor !== undefined) {
@@ -93,11 +89,9 @@ export default function Equipamentos() {
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
 
-  // Estados para o Modal de Exclusão
   const [modalRemoverAberto, setModalRemoverAberto] = useState(false);
   const [equipamentoAlvo, setEquipamentoAlvo] = useState(null);
 
-  // 1. Query da listagem de equipamentos (Cache de 30s)
   const {
     data: respostaEquipamentos,
     isLoading: loading,
@@ -117,7 +111,6 @@ export default function Equipamentos() {
   const meta = respostaEquipamentos?.meta ?? null;
   const error = erroQuery?.message || '';
 
-  // 2. Auxiliares em cache de 15 minutos (sem paginação infinita)
   const { data: categorias = [] } = useQuery({
     queryKey: ['auxiliares-categorias'],
     queryFn: () => fetchAuxiliar('/auxiliares/categorias', 100),
@@ -154,7 +147,6 @@ export default function Equipamentos() {
     .map((s) => s.nome)
     .filter(Boolean);
 
-  // Mutation de Exclusão
   const excluirMutation = useMutation({
     mutationFn: async (id) => {
       return await api.delete(`/equipamentos/${id}`, {
@@ -257,7 +249,6 @@ export default function Equipamentos() {
       setModalItem(null);
       toast.success(res?.message || 'Equipamento salvo com sucesso!');
 
-      // Invalida as queries necessárias
       queryClient.invalidateQueries({ queryKey: ['equipamentos'] });
       queryClient.invalidateQueries({
         queryKey: ['auxiliares-equipamentos-select'],
