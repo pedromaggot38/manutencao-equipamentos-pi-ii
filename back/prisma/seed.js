@@ -1,9 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { PrismaClient } from '@prisma/client';
+import prisma from '../src/config/db.js';
 
-const prisma = new PrismaClient();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -126,67 +125,60 @@ async function main() {
     }
   }
 
-  console.log('🧹 Limpando dados antigos...');
-  await prisma.itemManutencao.deleteMany();
-  await prisma.manutencao.deleteMany();
-  await prisma.equipamento.deleteMany();
-  await prisma.fornecedor.deleteMany();
-  await prisma.marca.deleteMany();
-  await prisma.categoria.deleteMany();
-  await prisma.grupo.deleteMany();
-  await prisma.local.deleteMany();
-  await prisma.predio.deleteMany();
+  console.log('⚡ Executando migração em transação...');
+  await prisma.$transaction(
+    async (tx) => {
+      console.log('🧹 Limpando dados antigos...');
+      await tx.itemManutencao.deleteMany();
+      await tx.manutencao.deleteMany();
+      await tx.equipamento.deleteMany();
+      await tx.fornecedor.deleteMany();
+      await tx.marca.deleteMany();
+      await tx.categoria.deleteMany();
+      await tx.grupo.deleteMany();
+      await tx.local.deleteMany();
+      await tx.predio.deleteMany();
 
-  console.log('📥 Inserindo Prédios...');
-  if (predios.length > 0) await prisma.predio.createMany({ data: predios });
+      console.log('📥 Inserindo dados...');
+      if (predios.length > 0) await tx.predio.createMany({ data: predios });
+      if (grupos.length > 0) await tx.grupo.createMany({ data: grupos });
+      if (marcas.length > 0) await tx.marca.createMany({ data: marcas });
+      if (locais.length > 0) await tx.local.createMany({ data: locais });
+      if (categorias.length > 0)
+        await tx.categoria.createMany({ data: categorias });
+      if (fornecedores.length > 0)
+        await tx.fornecedor.createMany({ data: fornecedores });
+      if (equipamentos.length > 0)
+        await tx.equipamento.createMany({ data: equipamentos });
+      if (manutencoes.length > 0)
+        await tx.manutencao.createMany({ data: manutencoes });
+      if (itensManutencao.length > 0)
+        await tx.itemManutencao.createMany({ data: itensManutencao });
 
-  console.log('📥 Inserindo Grupos...');
-  if (grupos.length > 0) await prisma.grupo.createMany({ data: grupos });
+      console.log('🔢 Sincronizando sequências do PostgreSQL...');
+      const tables = [
+        'predios',
+        'locais',
+        'grupos',
+        'categorias',
+        'marcas',
+        'fornecedores',
+        'equipamentos',
+        'manutencoes',
+        'itens_manutencao',
+      ];
 
-  console.log('📥 Inserindo Marcas...');
-  if (marcas.length > 0) await prisma.marca.createMany({ data: marcas });
-
-  console.log('📥 Inserindo Locais...');
-  if (locais.length > 0) await prisma.local.createMany({ data: locais });
-
-  console.log('📥 Inserindo Categorias...');
-  if (categorias.length > 0)
-    await prisma.categoria.createMany({ data: categorias });
-
-  console.log('📥 Inserindo Fornecedores...');
-  if (fornecedores.length > 0)
-    await prisma.fornecedor.createMany({ data: fornecedores });
-
-  console.log('📥 Inserindo Equipamentos...');
-  if (equipamentos.length > 0)
-    await prisma.equipamento.createMany({ data: equipamentos });
-
-  console.log('📥 Inserindo Manutenções...');
-  if (manutencoes.length > 0)
-    await prisma.manutencao.createMany({ data: manutencoes });
-
-  console.log('📥 Inserindo Itens de Manutenção...');
-  if (itensManutencao.length > 0)
-    await prisma.itemManutencao.createMany({ data: itensManutencao });
-
-  console.log('🔢 Sincronizando sequências do PostgreSQL...');
-  const tables = [
-    { table: 'predios', seq: 'predios_id_seq' },
-    { table: 'locais', seq: 'locais_id_seq' },
-    { table: 'grupos', seq: 'grupos_id_seq' },
-    { table: 'categorias', seq: 'categorias_id_seq' },
-    { table: 'marcas', seq: 'marcas_id_seq' },
-    { table: 'fornecedores', seq: 'fornecedores_id_seq' },
-    { table: 'equipamentos', seq: 'equipamentos_id_seq' },
-    { table: 'manutencoes', seq: 'manutencoes_id_seq' },
-    { table: 'itens_manutencao', seq: 'itens_manutencao_id_seq' },
-  ];
-
-  for (const item of tables) {
-    await prisma.$executeRawUnsafe(
-      `SELECT setval(pg_get_serial_sequence('"${item.table}"', 'id'), coalesce(max(id), 1), max(id) IS NOT null) FROM "${item.table}";`,
-    );
-  }
+      for (const table of tables) {
+        await tx.$executeRawUnsafe(
+          `SELECT setval(pg_get_serial_sequence('"${table}"', 'id'), coalesce(max(id), 1), max(id) IS NOT null) FROM "${table}";`,
+        );
+      }
+    },
+    {
+      maxWait: 15000,
+      timeout: 60000,
+    },
+  );
 
   console.log('✅ Seed finalizado com total sucesso!');
 }
